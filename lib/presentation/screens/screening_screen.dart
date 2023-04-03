@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ScreningScreen extends StatefulWidget {
-  const ScreningScreen({
+class ScreeningScreen extends StatefulWidget {
+  const ScreeningScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ScreningScreen> createState() => _ScreningScreenState();
+  State<ScreeningScreen> createState() => _ScreeningScreenState();
 }
 
-class _ScreningScreenState extends State<ScreningScreen> {
+class _ScreeningScreenState extends State<ScreeningScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

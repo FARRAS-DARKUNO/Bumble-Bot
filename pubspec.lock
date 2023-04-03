@@ -73,14 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  curved_navigation_bar:
-    dependency: "direct main"
-    description:
-      name: curved_navigation_bar
-      sha256: ea6412d00c5d83501bbf1cf9d1ac2ff11a20fbaf910c103c95ace7de82910334
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -259,6 +251,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.5"
+  persistent_bottom_nav_bar_custom:
+    dependency: "direct main"
+    description:
+      name: persistent_bottom_nav_bar_custom
+      sha256: "4539a11e970dd7e1801d23c52b0d5d5898c0891c45044a2b9aa3c5103df38b8d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
   platform:
     dependency: transitive
     description:
