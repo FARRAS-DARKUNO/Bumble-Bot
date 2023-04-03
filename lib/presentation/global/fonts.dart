@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 h1(Color color) {
   return GoogleFonts.kumbhSans(
     color: color,
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
   );
 }
 
@@ -20,7 +20,7 @@ h2(Color color) {
 h3(Color color) {
   return GoogleFonts.kumbhSans(
     color: color,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 }
@@ -38,5 +38,13 @@ h5(Color color) {
     color: color,
     fontSize: 12,
     fontWeight: FontWeight.w400,
+  );
+}
+
+semiTitle(Color color) {
+  return GoogleFonts.kumbhSans(
+    color: color,
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
   );
 }

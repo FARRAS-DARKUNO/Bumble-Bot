@@ -1,4 +1,5 @@
 import 'package:bumble_bot/presentation/global/colors.dart';
+import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/screens/home_screen.dart';
 import 'package:bumble_bot/presentation/screens/post_screen.dart';
 import 'package:bumble_bot/presentation/screens/profile_screen.dart';
@@ -29,6 +30,7 @@ class _NavigationState extends State<Navigation> {
     ));
     return PersistentTabView(
       context,
+      navBarHeight: sHeightBarNavigation(context),
       controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),

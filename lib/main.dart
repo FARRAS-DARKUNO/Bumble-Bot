@@ -16,11 +16,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [BlocProvider(create: (context) => RouteBloc())],
       child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: Navigation()),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const Navigation(),
+      ),
     );
   }
 }

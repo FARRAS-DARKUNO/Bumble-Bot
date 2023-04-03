@@ -8,4 +8,4 @@ const Color cWhite = Color.fromARGB(255, 255, 255, 255);
 const Color cBlack = Color.fromARGB(255, 22, 7, 33);
 const Color cBlue = Color.fromARGB(255, 62, 152, 240);
 const Color cYellow = Color.fromARGB(255, 255, 198, 0);
-const Color cGray = Color.fromARGB(255, 241, 241, 241);
+const Color cGray = Color.fromARGB(255, 173, 173, 173);

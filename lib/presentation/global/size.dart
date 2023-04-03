@@ -9,6 +9,16 @@ sHeightFull(BuildContext context) {
       MediaQuery.of(context).viewPadding.top;
 }
 
+sHeightScreen(BuildContext context) {
+  return MediaQuery.of(context).size.height -
+      MediaQuery.of(context).viewPadding.top -
+      55;
+}
+
+sHeightBarNavigation(BuildContext context) {
+  return 55.0;
+}
+
 sWidthDynamic(BuildContext context, dynamic value) {
   return MediaQuery.of(context).size.width * value;
 }
