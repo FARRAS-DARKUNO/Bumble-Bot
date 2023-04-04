@@ -19,6 +19,10 @@ sHeightBarNavigation(BuildContext context) {
   return 55.0;
 }
 
+sHeightBackButton(BuildContext context) {
+  return 60.0;
+}
+
 sWidthDynamic(BuildContext context, dynamic value) {
   return MediaQuery.of(context).size.width * value;
 }
