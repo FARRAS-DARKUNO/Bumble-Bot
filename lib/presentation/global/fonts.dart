@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+bigFonts(Color color) {
+  return GoogleFonts.kumbhSans(
+    color: color,
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+  );
+}
+
 h1(Color color) {
   return GoogleFonts.kumbhSans(
     color: color,
