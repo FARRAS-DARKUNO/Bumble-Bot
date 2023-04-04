@@ -37,7 +37,7 @@ class _NavigationState extends State<Navigation> {
       confineInSafeArea: true,
       backgroundColor: cPremier,
       handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       stateManagement: true,
       hideNavigationBarWhenKeyboardShows: true,
       decoration: const NavBarDecoration(

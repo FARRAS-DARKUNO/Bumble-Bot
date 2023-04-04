@@ -9,6 +9,14 @@ bigFonts(Color color) {
   );
 }
 
+button(Color color) {
+  return GoogleFonts.kumbhSans(
+    color: color,
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+  );
+}
+
 h1(Color color) {
   return GoogleFonts.kumbhSans(
     color: color,
