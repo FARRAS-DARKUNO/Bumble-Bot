@@ -28,24 +28,27 @@ class _WalletScreenState extends State<WalletScreen> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                waletUi(context),
-                const CardWallet(),
-                const ButtonOnWallet(),
-                const SizedBox(height: 10),
-                Text('Gift Token', style: h1(cPremier)),
-                const SizedBox(height: 10),
-                const SizedBox(height: 10),
-                const TextNormalInput(hintText: 'To Username'),
-                const SizedBox(height: 10),
-                const AmountDropdown(hintText: 'Amount'),
-                const SizedBox(height: 10),
-                const PasswordInput(hintText: 'Password'),
-                const SizedBox(height: 30),
-                const NormalButton(title: 'Submit'),
-              ],
+          child: SizedBox(
+            height: sHeightScreen(context),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  waletUi(context),
+                  const CardWallet(),
+                  const ButtonOnWallet(),
+                  const SizedBox(height: 10),
+                  Text('Gift Token', style: h1(cPremier)),
+                  const SizedBox(height: 10),
+                  const SizedBox(height: 10),
+                  const TextNormalInput(hintText: 'To Username'),
+                  const SizedBox(height: 10),
+                  const AmountDropdown(hintText: 'Amount'),
+                  const SizedBox(height: 10),
+                  const PasswordInput(hintText: 'Password'),
+                  const SizedBox(height: 30),
+                  const NormalButton(title: 'Submit'),
+                ],
+              ),
             ),
           ),
         ),
