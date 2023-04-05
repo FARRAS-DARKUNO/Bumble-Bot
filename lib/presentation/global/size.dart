@@ -34,3 +34,9 @@ sWidthFull(BuildContext context) {
 sKeyboard(BuildContext context) {
   return MediaQuery.of(context).viewInsets.bottom;
 }
+
+sPaddingBottom(BuildContext context) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+  );
+}

@@ -1,20 +1,21 @@
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../global/colors.dart';
 import '../../global/size.dart';
 
-class AmountDropdown extends StatefulWidget {
+class HashtagDropdown extends StatefulWidget {
   final String hintText;
-  const AmountDropdown({Key? key, required this.hintText}) : super(key: key);
+  const HashtagDropdown({Key? key, required this.hintText}) : super(key: key);
 
   @override
-  State<AmountDropdown> createState() => _AmountDropdownState();
+  State<HashtagDropdown> createState() => _HashtagDropdownState();
 }
 
-class _AmountDropdownState extends State<AmountDropdown> {
-  List<String> list = <String>['BNB', 'BUMBLE'];
-  String dropdownValue = 'BNB';
+class _HashtagDropdownState extends State<HashtagDropdown> {
+  List<String> list = <String>['FEED', 'ARTICLE'];
+  String dropdownValue = 'FEED';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,8 +31,6 @@ class _AmountDropdownState extends State<AmountDropdown> {
           SizedBox(
             width: sWidthDynamic(context, 0.58),
             child: TextField(
-              // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
