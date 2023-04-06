@@ -1,5 +1,5 @@
-import 'package:bumble_bot/presentation/widgets/card/card_amount_coint.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_profile_notification.dart';
+import 'package:bumble_bot/presentation/widgets/information/transfer_history.dart';
 import 'package:flutter/material.dart';
 import '../global/colors.dart';
 import '../global/fonts.dart';
@@ -25,7 +25,10 @@ class HistoryWallet extends StatelessWidget {
                 child: Column(
                   children: [
                     const CardProfileNotification(),
-                    Text('Transaktion History', style: h3(cBlack))
+                    Text('Transaktion History', style: h3(cBlack)),
+                    transferHistoryUp(context),
+                    transferHistoryDown(context),
+                    transferHistorySCC(context),
                   ],
                 ),
               ),
