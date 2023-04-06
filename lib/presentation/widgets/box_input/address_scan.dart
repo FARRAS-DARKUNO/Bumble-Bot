@@ -1,4 +1,3 @@
-import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:flutter/material.dart';
 
 import '../../global/colors.dart';

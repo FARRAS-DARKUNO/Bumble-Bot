@@ -1,4 +1,3 @@
-import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';

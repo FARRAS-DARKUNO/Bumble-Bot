@@ -1,8 +1,6 @@
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
-import 'package:bumble_bot/presentation/widgets/card/card_add_post.dart';
-import 'package:bumble_bot/presentation/widgets/card/card_post_circle.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_profile_notification.dart';
 import 'package:bumble_bot/presentation/widgets/contain/slide_post.dart';
 import 'package:flutter/material.dart';

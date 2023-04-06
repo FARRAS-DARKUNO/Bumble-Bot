@@ -3,7 +3,6 @@ import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/address_scan.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/amount_dropdown.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/password.dart';
-import 'package:bumble_bot/presentation/widgets/box_input/text_normal_input.dart';
 import 'package:bumble_bot/presentation/widgets/button/normal_button.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_amount_coint.dart';
 import 'package:flutter/material.dart';
