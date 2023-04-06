@@ -7,6 +7,8 @@ import '../global/size.dart';
 import '../widgets/button/back_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../widgets/information/my_token_address.dart';
+
 class MyBarcode extends StatelessWidget {
   const MyBarcode({
     Key? key,
@@ -44,25 +46,6 @@ class MyBarcode extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget infoAddress(BuildContext context, String text) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 10),
-    width: sWidthDynamic(context, 1) - 40,
-    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      border: Border.all(width: 2, color: cPremier),
-    ),
-    child: Text(
-      text,
-      style: h3(cBlack),
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
-      maxLines: 1,
-    ),
-  );
 }
 
 Widget buttonUI(BuildContext context) {

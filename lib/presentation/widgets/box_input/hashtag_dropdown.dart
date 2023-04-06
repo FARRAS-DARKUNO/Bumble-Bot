@@ -1,6 +1,5 @@
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../global/colors.dart';
 import '../../global/size.dart';
