@@ -2,6 +2,7 @@ import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_profile_notification.dart';
+import 'package:bumble_bot/presentation/widgets/contain/photo_post_contain.dart';
 import 'package:bumble_bot/presentation/widgets/contain/slide_post.dart';
 import 'package:flutter/material.dart';
 
@@ -45,9 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const CorouselSLider(),
                 Container(
-                    margin: const EdgeInsets.only(left: 20, top: 20),
-                    alignment: Alignment.topLeft,
-                    child: Text('Lates News', style: h4(cGray)))
+                  margin: const EdgeInsets.only(left: 20, top: 20),
+                  alignment: Alignment.topLeft,
+                  child: Text('Lates News', style: h4(cGray)),
+                ),
+                const PhotoPostContain(),
+                const SizedBox(height: 50)
               ],
             ),
           ),
