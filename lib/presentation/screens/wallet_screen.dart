@@ -4,13 +4,11 @@ import 'package:bumble_bot/presentation/widgets/button/button_on_wallet.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../global/size.dart';
 import '../widgets/box_input/amount_dropdown.dart';
 import '../widgets/box_input/password.dart';
 import '../widgets/box_input/text_normal_input.dart';
 import '../widgets/button/normal_button.dart';
-import '../widgets/card/card_amount_coint.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({
