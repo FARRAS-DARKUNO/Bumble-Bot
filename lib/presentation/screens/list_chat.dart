@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../global/colors.dart';
 import '../global/fonts.dart';
 import '../global/size.dart';
-import '../widgets/button/back_button.dart';
 
 class ListCats extends StatelessWidget {
   const ListCats({
