@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 import '../widgets/contain/photo_post_contain.dart';
+import 'notofication.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({
@@ -42,10 +43,23 @@ class _PostScreenState extends State<PostScreen> {
                               child: const Icon(Icons.add_circle_rounded,
                                   color: cRed, size: 30),
                             ),
-                            SizedBox(width: 20),
-                            Icon(Icons.message, color: cPremier, size: 30),
-                            SizedBox(width: 20),
-                            Icon(Icons.notifications, color: cPremier, size: 30)
+                            const SizedBox(width: 20),
+                            GestureDetector(
+                              child: const Icon(
+                                Icons.message,
+                                color: cPremier,
+                                size: 30,
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            GestureDetector(
+                              onTap: () => gotoNotification(context),
+                              child: const Icon(
+                                Icons.notifications,
+                                color: cPremier,
+                                size: 30,
+                              ),
+                            )
                           ],
                         )
                       ],
@@ -102,6 +116,15 @@ gotoPosting(BuildContext context) {
   pushNewScreen(
     context,
     screen: const Posting(),
+    withNavBar: true, // OPTIONAL VALUE. True by default.
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
+}
+
+gotoNotification(BuildContext context) {
+  pushNewScreen(
+    context,
+    screen: const NotificationBase(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

@@ -1,6 +1,8 @@
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
+import 'package:bumble_bot/presentation/screens/notofication.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 import '../../global/colors.dart';
 
@@ -47,9 +49,25 @@ class CardProfileNotification extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(Icons.notifications_rounded, size: 30, color: cPremier)
+          GestureDetector(
+            onTap: () => gotoNotification(context),
+            child: const Icon(
+              Icons.notifications_rounded,
+              size: 30,
+              color: cPremier,
+            ),
+          )
         ],
       ),
     );
   }
+}
+
+gotoNotification(BuildContext context) {
+  pushNewScreen(
+    context,
+    screen: const NotificationBase(),
+    withNavBar: true, // OPTIONAL VALUE. True by default.
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
 }
