@@ -1,8 +1,10 @@
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
+import 'package:bumble_bot/presentation/screens/registration.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/password.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/text_normal_input.dart';
 import 'package:bumble_bot/presentation/widgets/button/google_login.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../global/size.dart';
@@ -45,7 +47,10 @@ class Login extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Dont have an account?   ', style: h4(cBlack)),
-                    Text('Register', style: h4(cPremier)),
+                    GestureDetector(
+                      onTap: () => gotoRegister(context),
+                      child: Text('Register', style: h4(cPremier)),
+                    ),
                   ],
                 )
               ],
@@ -55,4 +60,11 @@ class Login extends StatelessWidget {
       ),
     );
   }
+}
+
+gotoRegister(BuildContext context) {
+  Navigator.of(context).push(CupertinoPageRoute<void>(
+    title: "Click me",
+    builder: (BuildContext context) => const Register(),
+  ));
 }
