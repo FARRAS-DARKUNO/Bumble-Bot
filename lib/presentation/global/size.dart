@@ -15,12 +15,21 @@ sHeightScreen(BuildContext context) {
       55;
 }
 
+sHeightScreenComments(BuildContext context) {
+  return MediaQuery.of(context).size.height -
+      MediaQuery.of(context).viewPadding.top;
+}
+
 sHeightBarNavigation(BuildContext context) {
   return 55.0;
 }
 
 sHeightBackButton(BuildContext context) {
   return 60.0;
+}
+
+sHeightInputComments(BuildContext context) {
+  return 80.0;
 }
 
 sWidthDynamic(BuildContext context, dynamic value) {
