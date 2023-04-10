@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 import '../widgets/contain/photo_post_contain.dart';
+import 'list_chat.dart';
 import 'notofication.dart';
 
 class PostScreen extends StatefulWidget {
@@ -45,6 +46,7 @@ class _PostScreenState extends State<PostScreen> {
                             ),
                             const SizedBox(width: 20),
                             GestureDetector(
+                              onTap: () => gotoChats(context),
                               child: const Icon(
                                 Icons.message,
                                 color: cPremier,
@@ -125,6 +127,15 @@ gotoNotification(BuildContext context) {
   pushNewScreen(
     context,
     screen: const NotificationBase(),
+    withNavBar: true, // OPTIONAL VALUE. True by default.
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
+}
+
+gotoChats(BuildContext context) {
+  pushNewScreen(
+    context,
+    screen: const ListCats(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );
