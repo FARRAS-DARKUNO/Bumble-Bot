@@ -1,4 +1,6 @@
+import 'package:bumble_bot/presentation/screens/story_post.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 import '../../global/colors.dart';
 
@@ -19,10 +21,22 @@ class CardAddPost extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         border: Border.all(color: cPremier, width: 4),
       ),
-      child: Container(
-        transform: Matrix4.translationValues(20.0, 15.0, 0.0),
-        child: Image.asset('assets/images/add.png'),
+      child: GestureDetector(
+        onTap: () => gotoStory(context),
+        child: Container(
+          transform: Matrix4.translationValues(20.0, 15.0, 0.0),
+          child: Image.asset('assets/images/add.png'),
+        ),
       ),
     );
   }
+}
+
+gotoStory(BuildContext context) {
+  pushNewScreen(
+    context,
+    screen: const StoryPost(),
+    withNavBar: true, // OPTIONAL VALUE. True by default.
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
 }

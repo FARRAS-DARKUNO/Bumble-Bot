@@ -3,7 +3,6 @@ import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/widgets/navigation/navigation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class GoogleAndLogin extends StatelessWidget {
   const GoogleAndLogin({

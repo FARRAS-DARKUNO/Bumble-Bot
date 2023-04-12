@@ -3,7 +3,6 @@ import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/password.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/text_normal_input.dart';
 import 'package:bumble_bot/presentation/widgets/button/back_button.dart';
-import 'package:bumble_bot/presentation/widgets/button/google_login.dart';
 import 'package:bumble_bot/presentation/widgets/button/google_register.dart';
 import 'package:flutter/material.dart';
 
