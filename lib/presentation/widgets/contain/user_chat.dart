@@ -1,8 +1,8 @@
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
-import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
-import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
+
+import '../../global/size.dart';
 
 class UserChat extends StatelessWidget {
   final String message;
@@ -11,19 +11,44 @@ class UserChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // onLongPress: () async {
-      //   await Clipboard.setData(ClipboardData(text: message))
-      //       .then((value) => alertDynamic(context, "Copy", ''));
-      // },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 5),
-        child: BubbleSpecialOne(
-          text: message,
-          isSender: true,
-          color: cBlue,
-          textStyle: h4(cWhite),
-        ),
+    return Container(
+      alignment: Alignment.topRight,
+      width: sWidthFull(context),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            constraints: BoxConstraints(maxWidth: sWidthDynamic(context, 0.7)),
+            decoration: BoxDecoration(
+              color: cPremier,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: 150,
+                  width: sWidthDynamic(context, 0.7) - 15 * 2,
+                  color: cBlack,
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'Hallo apa kabar sobat ? Nama saya ratna Hallo salam kenal',
+                  style: h4(cWhite),
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            '02:02:91 20-29-1992',
+            style: h5(cGray),
+            textAlign: TextAlign.start,
+          ),
+        ],
       ),
     );
   }

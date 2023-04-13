@@ -32,16 +32,19 @@ class _ChatState extends State<Chat> {
                 const BackButtonChat(),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  color: cGray,
+                  color: const Color.fromARGB(255, 235, 229, 214),
                   width: sWidthFull(context),
                   height: isKeyboardVisible
                       ? highContain - sKeyboard(context)
                       : highContain,
                   child: SingleChildScrollView(
+                    reverse: isKeyboardVisible ? true : false,
                     child: Column(
                       children: const <Widget>[
                         ServerChat(message: "hallo ?"),
-                        UserChat(message: "Iya Kenapa ?")
+                        UserChat(message: "Iya Kenapa ?"),
+                        ServerChat(message: "hallo ?"),
+                        UserChat(message: "Iya Kenapa ?"),
                       ],
                     ),
                   ),
@@ -62,21 +65,34 @@ class _ChatState extends State<Chat> {
                         child: const TextField(
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Search Wallet',
+                            hintText: 'Talk ...',
                           ),
                         ),
                       ),
-                      Container(
-                        width: sWidthDynamic(context, 0.2) - 32,
-                        height: sHeightBackButton(context) - 10,
-                        margin: const EdgeInsets.only(right: 20),
-                        decoration: BoxDecoration(
-                          color: cTersier,
-                          borderRadius: BorderRadius.circular(40),
-                          border: Border.all(width: 1, color: cGray),
-                        ),
-                        child: const Icon(Icons.send, color: cWhite),
-                      ),
+                      !isKeyboardVisible
+                          ? Container(
+                              width: sWidthDynamic(context, 0.2) - 32,
+                              height: sHeightBackButton(context) - 10,
+                              margin: const EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                color: cTersier,
+                                borderRadius: BorderRadius.circular(40),
+                                border: Border.all(width: 1, color: cGray),
+                              ),
+                              child:
+                                  const Icon(Icons.camera_alt, color: cWhite),
+                            )
+                          : Container(
+                              width: sWidthDynamic(context, 0.2) - 32,
+                              height: sHeightBackButton(context) - 10,
+                              margin: const EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                color: cTersier,
+                                borderRadius: BorderRadius.circular(40),
+                                border: Border.all(width: 1, color: cGray),
+                              ),
+                              child: const Icon(Icons.send, color: cWhite),
+                            ),
                     ],
                   ),
                 ),
