@@ -1,7 +1,6 @@
 import 'package:bumble_bot/presentation/widgets/button/back_button_add_chats.dart';
+import 'package:bumble_bot/presentation/widgets/card/card_chat.dart';
 import 'package:flutter/material.dart';
-import '../global/colors.dart';
-import '../global/fonts.dart';
 import '../global/size.dart';
 
 class ListCats extends StatelessWidget {
@@ -21,8 +20,8 @@ class ListCats extends StatelessWidget {
               height: sHeightScreen(context) - sHeightBackButton(context),
               child: SingleChildScrollView(
                 child: Column(
-                  children: [
-                    Text('Pemberitahuan', style: h3(cBlack)),
+                  children: const [
+                    CardChat(),
                   ],
                 ),
               ),
