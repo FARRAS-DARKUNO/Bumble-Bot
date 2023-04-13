@@ -1,7 +1,7 @@
 import 'package:bumble_bot/presentation/screens/login.dart';
+import 'package:bumble_bot/provider/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'provider/route_bloc/route_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => RouteBloc())],
+      providers: [
+        BlocProvider(create: (context) => LocationBloc()),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

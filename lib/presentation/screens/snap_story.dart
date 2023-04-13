@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import '../global/colors.dart';
-import '../global/fonts.dart';
-import '../global/size.dart';
-import '../widgets/button/back_button.dart';
 import 'package:story_view/story_view.dart';
 
 class SnapStory extends StatelessWidget {
@@ -29,6 +25,12 @@ class SnapStory extends StatelessWidget {
                   'https://thumbs.dreamstime.com/z/hand-man-reaching-to-towards-sky-make-symbol-118400493.jpg',
               controller: controller,
             ),
+            StoryItem.pageVideo(
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+              controller: controller,
+              duration: const Duration(seconds: 15),
+              caption: '',
+            )
           ],
           onComplete: () => Navigator.pop(context),
           inline: false,
