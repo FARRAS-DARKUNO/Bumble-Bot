@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1084756615117",
+    "project_id": "bumble-14907",
+    "storage_bucket": "bumble-14907.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084756615117:android:85aa9d297944f69fb02e84",
+        "android_client_info": {
+          "package_name": "com.example.bumble_bot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084756615117-t07ge1cfnau5mb7duat0coeu3vlqujg8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS_cxiTC6yKJ4T2y86eX_9bihfDkQRqZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084756615117-4srr90cd812sb8ket920s70mrcr89unb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1084756615117-r72higqqsup491ja5mm6anu8em0iv6fa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bumbleBot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

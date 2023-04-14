@@ -3,12 +3,18 @@ import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/widgets/navigation/navigation.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class GoogleAndLogin extends StatelessWidget {
+class GoogleAndLogin extends StatefulWidget {
   const GoogleAndLogin({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<GoogleAndLogin> createState() => _GoogleAndLoginState();
+}
+
+class _GoogleAndLoginState extends State<GoogleAndLogin> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,7 +75,21 @@ class GoogleAndLogin extends StatelessWidget {
   }
 }
 
-gotoGoogle(BuildContext context) {}
+final GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: [
+    'email',
+  ],
+);
+
+gotoGoogle(BuildContext context) async {
+  try {
+    await _googleSignIn.signIn().then((value) {
+      print('Halooooo ${value!.displayName}');
+    });
+  } catch (error) {
+    print('Halooooooo $error');
+  }
+}
 
 gotoLogin(BuildContext context) {
   Navigator.of(context).push(CupertinoPageRoute<void>(

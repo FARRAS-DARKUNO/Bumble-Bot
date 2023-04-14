@@ -48,7 +48,8 @@ dependencies:
   flutter_map: ^3.1.0
   geocoding: ^2.1.0
   latlong2: ^0.8.1
-  chat_bubbles: ^1.4.1
+  google_sign_in: ^6.1.0
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:
