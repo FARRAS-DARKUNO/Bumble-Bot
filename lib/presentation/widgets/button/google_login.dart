@@ -1,8 +1,11 @@
+import 'package:bumble_bot/data/model/status_message_model.dart';
+import 'package:bumble_bot/data/repository/introduction_repository.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/widgets/navigation/navigation.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAndLogin extends StatefulWidget {
@@ -15,8 +18,51 @@ class GoogleAndLogin extends StatefulWidget {
 }
 
 class _GoogleAndLoginState extends State<GoogleAndLogin> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    gotoLogin() {
+      IntroductionRepository()
+          .postLoginRepo("user1@example.com", "password")
+          .then((value) {
+        print(value);
+      });
+    }
+
+    gotoGoogle() async {
+      try {
+        await _googleSignIn.signIn().then((value) async {
+          IntroductionRepository()
+              .postRegserterGoogleRepo(value!.email, value.id)
+              .then((value) {
+            print('halooooooooooooooooo senyaaaaaaaa $value');
+          });
+
+          // if (data.status == 'success') {
+          //   print('Masuk ke dalam Pegister');
+          //   setState(() {
+          //     isLoading = false;
+          //   });
+          //   // gotoLogin();
+          // }
+          // if (data.message == "Email sudah terdaftar") {
+          //   print('Masuk ke dalam Login');
+          //   await IntroductionRepository()
+          //       .postLoginGoogleRepo(value.email, value.id)
+          //       .then((value) {
+          //     print('Masuk ke dalam Login');
+          //     setState(() {
+          //       isLoading = false;
+          //     });
+          //   });
+          // }
+        });
+      } catch (error) {
+        print('Halooooooo $error');
+      }
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
       width: sWidthFull(context),
@@ -24,7 +70,13 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           GestureDetector(
-            onTap: () => gotoGoogle(context),
+            onTap: () {
+              // isLoading ? null : gotoGoogle();
+              gotoGoogle();
+              setState(() {
+                isLoading = true;
+              });
+            },
             child: Container(
               width: sWidthDynamic(context, 0.4),
               height: 40,
@@ -39,18 +91,20 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/google.png', scale: 9),
-                  const SizedBox(width: 15),
-                  Text('Google', style: h3(cPremier))
-                ],
-              ),
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/images/google.png', scale: 9),
+                        const SizedBox(width: 15),
+                        Text('Google', style: h3(cPremier))
+                      ],
+                    ),
             ),
           ),
           GestureDetector(
-            onTap: () => gotoLogin(context),
+            onTap: () => gotoLogin(),
             child: Container(
               alignment: Alignment.center,
               width: sWidthDynamic(context, 0.4),
@@ -81,17 +135,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
   ],
 );
 
-gotoGoogle(BuildContext context) async {
-  try {
-    await _googleSignIn.signIn().then((value) {
-      print('Halooooo ${value!.displayName}');
-    });
-  } catch (error) {
-    print('Halooooooo $error');
-  }
-}
-
-gotoLogin(BuildContext context) {
+gotoNext(BuildContext context) {
   Navigator.of(context).push(CupertinoPageRoute<void>(
     title: "Click me",
     builder: (BuildContext context) => const Navigation(),
