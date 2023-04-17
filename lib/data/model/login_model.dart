@@ -76,7 +76,7 @@ class LoginModel {
 class User {
   final String id;
   final String email;
-  final Password password;
+  final String password;
   final String google_uid;
   final String token;
   User({
@@ -90,7 +90,7 @@ class User {
   User copyWith({
     String? id,
     String? email,
-    Password? password,
+    String? password,
     String? google_uid,
     String? token,
   }) {
@@ -155,5 +155,3 @@ class User {
         token.hashCode;
   }
 }
-
-class Password {}

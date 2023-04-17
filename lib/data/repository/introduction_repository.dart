@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bumble_bot/data/model/login_model.dart';
 import 'package:bumble_bot/data/model/status_message_model.dart';
 import 'package:http/http.dart' as http;
@@ -9,11 +11,15 @@ class IntroductionRepository {
     String email,
     String googleUid,
   ) async {
-    print(email);
-    print(googleUid);
-    final response = await http.post(
-      Uri.parse('$baseUrl/register.php'),
-      body: {"email": email, "google_uid": googleUid},
+    var url = Uri.https('sisiteknis.com', 'bumblebot/register');
+
+    Map data = {'email': email, "google_uid": googleUid};
+    var body = json.encode(data);
+
+    var response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: body,
     );
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return StatusMessageModel.fromJson(response.body);
@@ -26,9 +32,12 @@ class IntroductionRepository {
     String email,
     String password,
   ) async {
+    Map data = {"email": email, "password": password};
+    var body = json.encode(data);
     final response = await http.post(
       Uri.parse('$baseUrl/register'),
-      body: {"email": email, "password": password},
+      headers: {"Content-Type": "application/json"},
+      body: body,
     );
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return StatusMessageModel.fromJson(response.body);
@@ -41,9 +50,13 @@ class IntroductionRepository {
     String email,
     String googleUid,
   ) async {
+    var url = Uri.https('sisiteknis.com', 'bumblebot/login');
+    Map data = {"email": email, "google_uid": googleUid};
+    var body = json.encode(data);
     final response = await http.post(
-      Uri.parse('$baseUrl/login'),
-      body: {"email": email, "google_uid": googleUid},
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: body,
     );
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return LoginModel.fromJson(response.body);
@@ -56,13 +69,14 @@ class IntroductionRepository {
     String email,
     String password,
   ) async {
-    print(email);
-    print(password);
+    Map data = {'email': email, 'password': password};
+    var body = json.encode(data);
+
     final response = await http.post(
-      Uri.parse('$baseUrl/login'),
-      body: {'email': email, 'password': password},
+      Uri.https('$baseUrl/login'),
+      headers: {"Content-Type": "application/json"},
+      body: body,
     );
-    print(response);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return LoginModel.fromJson(response.body);
     } else {

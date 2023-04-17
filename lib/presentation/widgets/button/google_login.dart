@@ -1,4 +1,3 @@
-import 'package:bumble_bot/data/model/status_message_model.dart';
 import 'package:bumble_bot/data/repository/introduction_repository.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
@@ -25,41 +24,31 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
     gotoLogin() {
       IntroductionRepository()
           .postLoginRepo("user1@example.com", "password")
-          .then((value) {
-        print(value);
-      });
+          .then((value) {});
     }
 
     gotoGoogle() async {
       try {
         await _googleSignIn.signIn().then((value) async {
-          IntroductionRepository()
+          await IntroductionRepository()
               .postRegserterGoogleRepo(value!.email, value.id)
-              .then((value) {
-            print('halooooooooooooooooo senyaaaaaaaa $value');
-          });
-
-          // if (data.status == 'success') {
-          //   print('Masuk ke dalam Pegister');
-          //   setState(() {
-          //     isLoading = false;
-          //   });
-          //   // gotoLogin();
-          // }
-          // if (data.message == "Email sudah terdaftar") {
-          //   print('Masuk ke dalam Login');
-          //   await IntroductionRepository()
-          //       .postLoginGoogleRepo(value.email, value.id)
-          //       .then((value) {
-          //     print('Masuk ke dalam Login');
-          //     setState(() {
-          //       isLoading = false;
-          //     });
-          //   });
-          // }
+              .then(
+            (_) {
+              IntroductionRepository()
+                  .postLoginGoogleRepo(value.email, value.id)
+                  .then((value) {
+                setState(() {
+                  isLoading = false;
+                  gotoNext(context);
+                });
+              });
+            },
+          );
         });
       } catch (error) {
-        print('Halooooooo $error');
+        setState(() {
+          isLoading = false;
+        });
       }
     }
 
@@ -71,7 +60,7 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              // isLoading ? null : gotoGoogle();
+              isLoading ? null : gotoGoogle();
               gotoGoogle();
               setState(() {
                 isLoading = true;
@@ -137,7 +126,6 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 
 gotoNext(BuildContext context) {
   Navigator.of(context).push(CupertinoPageRoute<void>(
-    title: "Click me",
     builder: (BuildContext context) => const Navigation(),
   ));
 }

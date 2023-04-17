@@ -1,1 +1,1 @@
-const String baseUrl = 'https://sisiteknis.com/bumblebot';
+const String baseUrl = 'https://sisiteknis.com';
