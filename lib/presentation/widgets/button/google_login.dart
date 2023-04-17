@@ -2,10 +2,11 @@ import 'package:bumble_bot/data/repository/introduction_repository.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
-import 'package:bumble_bot/presentation/widgets/navigation/navigation.dart';
+import 'package:bumble_bot/presentation/screens/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GoogleAndLogin extends StatefulWidget {
   final TextEditingController password;
@@ -25,7 +26,18 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
 
   @override
   Widget build(BuildContext context) {
-    gotoLogin() {}
+    gotoLogin() async {
+      await IntroductionRepository()
+          .postLoginRepo(widget.email.value.text, widget.password.value.text)
+          .then((value) async {
+        final pref = await SharedPreferences.getInstance();
+        await pref.setString('Token', value.token).then(
+          (_) {
+            gotoNext(context);
+          },
+        );
+      });
+    }
 
     gotoGoogle() async {
       try {
@@ -36,11 +48,16 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
             (_) {
               IntroductionRepository()
                   .postLoginGoogleRepo(value.email, value.id)
-                  .then((value) {
-                setState(() {
-                  isLoading = false;
-                  gotoNext(context);
-                });
+                  .then((value) async {
+                final pref = await SharedPreferences.getInstance();
+                await pref.setString('Token', value.token).then(
+                  (_) {
+                    setState(() {
+                      isLoading = false;
+                    });
+                    gotoNext(context);
+                  },
+                );
               });
             },
           );
@@ -126,6 +143,6 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 
 gotoNext(BuildContext context) {
   Navigator.of(context).push(CupertinoPageRoute<void>(
-    builder: (BuildContext context) => const Navigation(),
+    builder: (BuildContext context) => const SplashScreen(),
   ));
 }

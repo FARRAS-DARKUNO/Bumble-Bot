@@ -1,4 +1,4 @@
-import 'package:bumble_bot/presentation/screens/login.dart';
+import 'package:bumble_bot/presentation/screens/splash_screen.dart';
 import 'package:bumble_bot/provider/location_bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const Login(),
+        home: const SplashScreen(),
       ),
     );
   }

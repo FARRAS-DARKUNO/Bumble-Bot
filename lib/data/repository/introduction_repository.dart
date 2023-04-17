@@ -11,7 +11,7 @@ class IntroductionRepository {
     String email,
     String googleUid,
   ) async {
-    var url = Uri.https('sisiteknis.com', 'bumblebot/register');
+    var url = Uri.https(baseUrl, 'bumblebot/register');
 
     Map data = {'email': email, "google_uid": googleUid};
     var body = json.encode(data);
@@ -32,10 +32,11 @@ class IntroductionRepository {
     String email,
     String password,
   ) async {
+    var url = Uri.https(baseUrl, 'bumblebot/register');
     Map data = {"email": email, "password": password};
     var body = json.encode(data);
     final response = await http.post(
-      Uri.parse('$baseUrl/register'),
+      url,
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -50,7 +51,7 @@ class IntroductionRepository {
     String email,
     String googleUid,
   ) async {
-    var url = Uri.https('sisiteknis.com', 'bumblebot/login');
+    var url = Uri.https(baseUrl, 'bumblebot/login');
     Map data = {"email": email, "google_uid": googleUid};
     var body = json.encode(data);
     final response = await http.post(
@@ -69,11 +70,12 @@ class IntroductionRepository {
     String email,
     String password,
   ) async {
+    var url = Uri.https(baseUrl, 'bumblebot/login');
     Map data = {'email': email, 'password': password};
     var body = json.encode(data);
 
     final response = await http.post(
-      Uri.https('$baseUrl/login'),
+      url,
       headers: {"Content-Type": "application/json"},
       body: body,
     );
