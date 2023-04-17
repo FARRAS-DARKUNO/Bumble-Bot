@@ -9,11 +9,19 @@ import 'package:flutter/material.dart';
 
 import '../global/size.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final email = TextEditingController();
+
+  final password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,9 +40,9 @@ class Login extends StatelessWidget {
                 ),
                 Text("Login", style: bigFonts(cPremier)),
                 const SizedBox(height: 10),
-                const TextNormalInput(hintText: 'Email'),
+                TextNormalInput(hintText: 'Email', text: email),
                 const SizedBox(height: 10),
-                const PasswordInput(hintText: 'Password'),
+                PasswordInput(hintText: 'Password', text: password),
                 const SizedBox(height: 10),
                 Container(
                   alignment: Alignment.centerRight,
@@ -42,7 +50,7 @@ class Login extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Text('Forget Password?', style: h4(cPremier)),
                 ),
-                const GoogleAndLogin(),
+                GoogleAndLogin(email: email, password: password),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -65,6 +73,6 @@ class Login extends StatelessWidget {
 gotoRegister(BuildContext context) {
   Navigator.of(context).push(CupertinoPageRoute<void>(
     title: "Click me",
-    builder: (BuildContext context) => const Register(),
+    builder: (BuildContext context) => Register(),
   ));
 }

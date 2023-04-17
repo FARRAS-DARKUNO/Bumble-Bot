@@ -8,8 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAndLogin extends StatefulWidget {
+  final TextEditingController password;
+  final TextEditingController email;
   const GoogleAndLogin({
     Key? key,
+    required this.email,
+    required this.password,
   }) : super(key: key);
 
   @override
@@ -21,11 +25,7 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
 
   @override
   Widget build(BuildContext context) {
-    gotoLogin() {
-      IntroductionRepository()
-          .postLoginRepo("user1@example.com", "password")
-          .then((value) {});
-    }
+    gotoLogin() {}
 
     gotoGoogle() async {
       try {

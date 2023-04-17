@@ -10,9 +10,12 @@ import '../global/size.dart';
 import '../widgets/button/back_button.dart';
 
 class GiftToken extends StatelessWidget {
-  const GiftToken({
+  GiftToken({
     Key? key,
   }) : super(key: key);
+
+  final username = TextEditingController();
+  final password = TextEditingController();
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -32,11 +35,11 @@ class GiftToken extends StatelessWidget {
                       const SizedBox(height: 30),
                       const CardAmountCoint(),
                       const SizedBox(height: 10),
-                      const TextNormalInput(hintText: 'To Username'),
+                      TextNormalInput(hintText: 'To Username', text: username),
                       const SizedBox(height: 10),
                       const AmountDropdown(hintText: 'Amount'),
                       const SizedBox(height: 10),
-                      const PasswordInput(hintText: 'Password'),
+                      PasswordInput(hintText: 'Password', text: password),
                       const SizedBox(height: 30),
                       const NormalButton(title: 'Submit'),
                     ],

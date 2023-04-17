@@ -6,10 +6,11 @@ import '../global/size.dart';
 import '../widgets/button/back_button.dart';
 
 class StoryPost extends StatelessWidget {
-  const StoryPost({
+  StoryPost({
     Key? key,
   }) : super(key: key);
 
+  final caption = TextEditingController();
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -23,13 +24,13 @@ class StoryPost extends StatelessWidget {
                   height: sHeightScreen(context) - sHeightBackButton(context),
                   child: SingleChildScrollView(
                     child: Column(
-                      children: const [
-                        SizedBox(height: 30),
-                        InputImage(),
-                        SizedBox(height: 30),
-                        TextNormalInput(hintText: 'Caption'),
-                        SizedBox(height: 30),
-                        NormalButton(title: 'Story'),
+                      children: [
+                        const SizedBox(height: 30),
+                        const InputImage(),
+                        const SizedBox(height: 30),
+                        TextNormalInput(hintText: 'Caption', text: caption),
+                        const SizedBox(height: 30),
+                        const NormalButton(title: 'Story'),
                       ],
                     ),
                   ),

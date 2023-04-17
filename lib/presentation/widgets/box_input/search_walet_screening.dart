@@ -3,9 +3,8 @@ import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:flutter/material.dart';
 
 class SearchWaletScreening extends StatelessWidget {
-  const SearchWaletScreening({
-    Key? key,
-  }) : super(key: key);
+  final TextEditingController text;
+  const SearchWaletScreening({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +19,9 @@ class SearchWaletScreening extends StatelessWidget {
             borderRadius: BorderRadius.circular(40),
             border: Border.all(width: 1, color: cPremier),
           ),
-          child: const TextField(
-            decoration: InputDecoration(
+          child: TextField(
+            controller: text,
+            decoration: const InputDecoration(
               border: InputBorder.none,
               hintText: 'Search Wallet',
             ),

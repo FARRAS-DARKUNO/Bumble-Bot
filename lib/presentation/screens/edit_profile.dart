@@ -16,6 +16,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final name = TextEditingController();
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -40,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      const TextNormalInput(hintText: 'Farras'),
+                      TextNormalInput(hintText: 'Farras', text: name),
                       const SizedBox(height: 30),
                       const NormalButton(
                         title: 'Submit',

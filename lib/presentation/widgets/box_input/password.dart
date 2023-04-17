@@ -4,8 +4,13 @@ import '../../global/colors.dart';
 import '../../global/size.dart';
 
 class PasswordInput extends StatelessWidget {
+  final TextEditingController text;
   final String hintText;
-  const PasswordInput({Key? key, required this.hintText}) : super(key: key);
+  const PasswordInput({
+    Key? key,
+    required this.hintText,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +22,7 @@ class PasswordInput extends StatelessWidget {
         border: Border.all(width: 2, color: cPremier),
       ),
       child: TextField(
+        controller: text,
         obscureText: true,
         enableSuggestions: false,
         autocorrect: false,

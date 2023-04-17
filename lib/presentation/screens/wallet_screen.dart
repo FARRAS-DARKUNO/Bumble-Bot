@@ -20,6 +20,8 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  final username = TextEditingController();
+  final password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -38,11 +40,11 @@ class _WalletScreenState extends State<WalletScreen> {
                   Text('Gift Token', style: h1(cPremier)),
                   const SizedBox(height: 10),
                   const SizedBox(height: 10),
-                  const TextNormalInput(hintText: 'To Username'),
+                  TextNormalInput(hintText: 'To Username', text: username),
                   const SizedBox(height: 10),
                   const AmountDropdown(hintText: 'Amount'),
                   const SizedBox(height: 10),
-                  const PasswordInput(hintText: 'Password'),
+                  PasswordInput(hintText: 'Password', text: password),
                   const SizedBox(height: 30),
                   const NormalButton(title: 'Submit'),
                 ],

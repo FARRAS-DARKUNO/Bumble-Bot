@@ -35,7 +35,7 @@ class CardAddPost extends StatelessWidget {
 gotoStory(BuildContext context) {
   pushNewScreen(
     context,
-    screen: const StoryPost(),
+    screen: StoryPost(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

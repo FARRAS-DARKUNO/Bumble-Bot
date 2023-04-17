@@ -88,7 +88,7 @@ class PostSroryGift extends StatelessWidget {
 gotoStory(BuildContext context) {
   pushNewScreen(
     context,
-    screen: const StoryPost(),
+    screen: StoryPost(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );
@@ -97,7 +97,7 @@ gotoStory(BuildContext context) {
 gotoGift(BuildContext context) {
   pushNewScreen(
     context,
-    screen: const GiftToken(),
+    screen: GiftToken(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );
@@ -106,7 +106,7 @@ gotoGift(BuildContext context) {
 gotoPosting(BuildContext context) {
   pushNewScreen(
     context,
-    screen: const Posting(),
+    screen: Posting(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

@@ -3,10 +3,20 @@ import 'package:flutter/material.dart';
 import '../../global/colors.dart';
 import '../../global/size.dart';
 
-class TextNormalInput extends StatelessWidget {
+class TextNormalInput extends StatefulWidget {
+  final TextEditingController text;
   final String hintText;
-  const TextNormalInput({Key? key, required this.hintText}) : super(key: key);
+  const TextNormalInput({
+    Key? key,
+    required this.text,
+    required this.hintText,
+  }) : super(key: key);
 
+  @override
+  State<TextNormalInput> createState() => _TextNormalInputState();
+}
+
+class _TextNormalInputState extends State<TextNormalInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,9 +27,10 @@ class TextNormalInput extends StatelessWidget {
         border: Border.all(width: 2, color: cPremier),
       ),
       child: TextField(
+        controller: widget.text,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: hintText,
+          hintText: widget.hintText,
         ),
       ),
     );

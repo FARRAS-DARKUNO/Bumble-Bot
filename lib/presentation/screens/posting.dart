@@ -10,10 +10,13 @@ import '../global/size.dart';
 import '../widgets/button/back_button.dart';
 
 class Posting extends StatelessWidget {
-  const Posting({
+  Posting({
     Key? key,
   }) : super(key: key);
 
+  final title = TextEditingController();
+  final hadtag = TextEditingController();
+  final caption = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return KeyboardVisibilityBuilder(
@@ -33,11 +36,11 @@ class Posting extends StatelessWidget {
                       children: [
                         const InputImage(),
                         const SizedBox(height: 10),
-                        const TextNormalInput(hintText: 'Title'),
+                        TextNormalInput(hintText: 'Title', text: title),
                         const SizedBox(height: 10),
                         const HashtagDropdown(hintText: 'Hashtag'),
                         const SizedBox(height: 10),
-                        const TextNormalInput(hintText: 'Caption'),
+                        TextNormalInput(hintText: 'Caption', text: caption),
                         const SizedBox(height: 10),
                         const AddPeopleOnPosting(),
                         const SizedBox(height: 10),

@@ -6,7 +6,10 @@ import '../../global/size.dart';
 
 class NumberNormalInput extends StatelessWidget {
   final String hintText;
-  const NumberNormalInput({Key? key, required this.hintText}) : super(key: key);
+  final TextEditingController text;
+  const NumberNormalInput(
+      {Key? key, required this.hintText, required this.text})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +21,7 @@ class NumberNormalInput extends StatelessWidget {
         border: Border.all(width: 2, color: cPremier),
       ),
       child: TextField(
+        controller: text,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         keyboardType: TextInputType.number,
         decoration: InputDecoration(

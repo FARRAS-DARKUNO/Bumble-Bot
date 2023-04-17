@@ -10,9 +10,15 @@ import '../global/size.dart';
 import '../widgets/box_input/number_normal_input.dart';
 
 class Register extends StatelessWidget {
-  const Register({
+  Register({
     Key? key,
   }) : super(key: key);
+
+  final name = TextEditingController();
+  final username = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final phone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +50,18 @@ class Register extends StatelessWidget {
                     children: <Widget>[
                       Text('Sign Up', style: h1(cPremier)),
                       const SizedBox(height: 20),
-                      const TextNormalInput(hintText: 'Name'),
+                      TextNormalInput(hintText: 'Name', text: name),
                       const SizedBox(height: 10),
-                      const TextNormalInput(hintText: 'Username'),
+                      TextNormalInput(hintText: 'Username', text: username),
                       const SizedBox(height: 10),
-                      const TextNormalInput(hintText: 'Email'),
+                      TextNormalInput(hintText: 'Email', text: email),
                       const SizedBox(height: 10),
-                      const PasswordInput(hintText: 'Password'),
+                      PasswordInput(hintText: 'Password', text: password),
                       const SizedBox(height: 10),
-                      const NumberNormalInput(hintText: 'Phone Number'),
+                      NumberNormalInput(
+                        hintText: 'Phone Number',
+                        text: phone,
+                      ),
                       const GoogleAndRegister(),
                       Text('Privacy Policy', style: h3(cPremier))
                     ],

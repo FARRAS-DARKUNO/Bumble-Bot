@@ -12,9 +12,11 @@ import '../widgets/button/back_button.dart';
 import '../widgets/information/my_token_address.dart';
 
 class Withdraw extends StatelessWidget {
-  const Withdraw({
+  Withdraw({
     Key? key,
   }) : super(key: key);
+
+  final password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class Withdraw extends StatelessWidget {
                         const SizedBox(height: 10),
                         const AmountDropdown(hintText: 'Amount'),
                         const SizedBox(height: 10),
-                        const PasswordInput(hintText: 'Password'),
+                        PasswordInput(hintText: 'Password', text: password),
                         const SizedBox(height: 30),
                         const NormalButton(title: 'Submit'),
                         sPaddingBottom(context),

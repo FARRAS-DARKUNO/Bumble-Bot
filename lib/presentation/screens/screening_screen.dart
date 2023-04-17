@@ -17,6 +17,7 @@ class ScreeningScreen extends StatefulWidget {
 }
 
 class _ScreeningScreenState extends State<ScreeningScreen> {
+  final search = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -42,7 +43,7 @@ class _ScreeningScreenState extends State<ScreeningScreen> {
                   ),
                 ),
                 const ReputationInformation(),
-                const SearchWaletScreening(),
+                SearchWaletScreening(text: search),
                 Container(
                   padding: const EdgeInsets.all(20),
                   width: sWidthFull(context),
