@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../alert/alert_dynamic.dart';
+
 class GoogleAndLogin extends StatefulWidget {
   final TextEditingController password;
   final TextEditingController email;
@@ -27,23 +29,32 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
   @override
   Widget build(BuildContext context) {
     gotoLogin() async {
-      await IntroductionRepository()
-          .postLoginRepo(widget.email.value.text, widget.password.value.text)
-          .then((value) async {
-        final pref = await SharedPreferences.getInstance();
-        await pref.setString('Token', value.token).then(
-          (_) {
-            gotoNext(context);
-          },
+      try {
+        await IntroductionRepository()
+            .postLoginRepo(widget.email.value.text, widget.password.value.text)
+            .then((value) async {
+          final pref = await SharedPreferences.getInstance();
+          await pref.setString('Token', value.token).then(
+            (_) {
+              gotoNext(context);
+            },
+          );
+        });
+      } catch (_) {
+        alertDynamic(
+          context,
+          "Email atau Passord Salah",
+          "Pastikan meninput email dan password yang benar",
         );
-      });
+      }
     }
 
     gotoGoogle() async {
       try {
         await _googleSignIn.signIn().then((value) async {
           await IntroductionRepository()
-              .postRegserterGoogleRepo(value!.email, value.id)
+              .postRegserterGoogleRepo(
+                  value!.email, value.id, value.photoUrl ?? '')
               .then(
             (_) {
               IntroductionRepository()

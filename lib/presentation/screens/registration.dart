@@ -62,7 +62,13 @@ class Register extends StatelessWidget {
                         hintText: 'Phone Number',
                         text: phone,
                       ),
-                      const GoogleAndRegister(),
+                      GoogleAndRegister(
+                        name: name,
+                        username: username,
+                        email: email,
+                        password: password,
+                        phone: phone,
+                      ),
                       Text('Privacy Policy', style: h3(cPremier))
                     ],
                   ),

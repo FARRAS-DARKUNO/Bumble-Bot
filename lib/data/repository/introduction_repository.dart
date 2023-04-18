@@ -10,10 +10,15 @@ class IntroductionRepository {
   Future<StatusMessageModel> postRegserterGoogleRepo(
     String email,
     String googleUid,
+    String profilePicture,
   ) async {
     var url = Uri.https(baseUrl, 'bumblebot/register');
 
-    Map data = {'email': email, "google_uid": googleUid};
+    Map data = {
+      "email": email,
+      "google_uid": googleUid,
+      "profile_picture": profilePicture
+    };
     var body = json.encode(data);
 
     var response = await http.post(
@@ -28,12 +33,17 @@ class IntroductionRepository {
     }
   }
 
-  Future<StatusMessageModel> postRegserterRepo(
-    String email,
-    String password,
-  ) async {
+  Future<StatusMessageModel> postRegserterRepo(String email, String password,
+      String name, String username, String phoneNumber) async {
     var url = Uri.https(baseUrl, 'bumblebot/register');
-    Map data = {"email": email, "password": password};
+    Map data = {
+      "email": email,
+      "password": password,
+      "google_uid": "",
+      "name": name,
+      "username": username,
+      "phone_number": phoneNumber
+    };
     var body = json.encode(data);
     final response = await http.post(
       url,
