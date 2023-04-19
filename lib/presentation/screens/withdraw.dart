@@ -7,16 +7,38 @@ import 'package:bumble_bot/presentation/widgets/button/normal_button.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_amount_coint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../global/size.dart';
 import '../widgets/button/back_button.dart';
 import '../widgets/information/my_token_address.dart';
 
-class Withdraw extends StatelessWidget {
-  Withdraw({
+class Withdraw extends StatefulWidget {
+  const Withdraw({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<Withdraw> createState() => _WithdrawState();
+}
+
+class _WithdrawState extends State<Withdraw> {
+  String walletToken = '';
   final password = TextEditingController();
+
+  getToken() async {
+    final pref = await SharedPreferences.getInstance();
+    var wallet = pref.getString('Wallet') ?? '';
+    setState(() {
+      walletToken = wallet;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +61,7 @@ class Withdraw extends StatelessWidget {
                         Text('WithDraw', style: h1(cPremier)),
                         const SizedBox(height: 30),
                         const CardAmountCoint(),
-                        infoAddress(
-                            context, 'ahshdashdkjashdkashdkajsdhasjkdhs'),
+                        infoAddress(context, walletToken),
                         const AddressScan(hintText: 'To Address'),
                         const SizedBox(height: 10),
                         const AmountDropdown(hintText: 'Amount'),

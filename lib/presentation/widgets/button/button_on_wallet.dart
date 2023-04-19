@@ -77,7 +77,7 @@ gotoBarcode(BuildContext context) {
 gotoWithdraw(BuildContext context) {
   pushNewScreen(
     context,
-    screen: Withdraw(),
+    screen: const Withdraw(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

@@ -1,6 +1,7 @@
 import 'package:bumble_bot/presentation/widgets/card/card_amount_coint.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_profile_notification.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../global/colors.dart';
 import '../global/fonts.dart';
 import '../global/size.dart';
@@ -9,14 +10,36 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../widgets/information/my_token_address.dart';
 
-class MyBarcode extends StatelessWidget {
+class MyBarcode extends StatefulWidget {
   const MyBarcode({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<MyBarcode> createState() => _MyBarcodeState();
+}
+
+class _MyBarcodeState extends State<MyBarcode> {
+  String walletToken = '';
+  final password = TextEditingController();
+
+  getToken() async {
+    final pref = await SharedPreferences.getInstance();
+    var wallet = pref.getString('Wallet') ?? '';
+    setState(() {
+      walletToken = wallet;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getToken();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String text = 'aodolbdlcwbencobewnucbeiwbconweoiewnconacnio';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -30,10 +53,10 @@ class MyBarcode extends StatelessWidget {
                   children: [
                     const CardProfileNotification(),
                     const CardAmountCoint(),
-                    infoAddress(context, text),
+                    infoAddress(context, walletToken),
                     buttonUI(context),
                     QrImage(
-                      data: text,
+                      data: walletToken,
                       version: QrVersions.auto,
                       size: 200.0,
                     ),

@@ -34,6 +34,7 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
             .postLoginRepo(widget.email.value.text, widget.password.value.text)
             .then((value) async {
           final pref = await SharedPreferences.getInstance();
+          await pref.setString('Email', widget.email.value.text);
           await pref.setString('Token', value.token).then(
             (_) {
               gotoNext(context);
@@ -59,9 +60,10 @@ class _GoogleAndLoginState extends State<GoogleAndLogin> {
             (_) {
               IntroductionRepository()
                   .postLoginGoogleRepo(value.email, value.id)
-                  .then((value) async {
+                  .then((data) async {
                 final pref = await SharedPreferences.getInstance();
-                await pref.setString('Token', value.token).then(
+                await pref.setString('Email', value.email);
+                await pref.setString('Token', data.token).then(
                   (_) {
                     setState(() {
                       isLoading = false;

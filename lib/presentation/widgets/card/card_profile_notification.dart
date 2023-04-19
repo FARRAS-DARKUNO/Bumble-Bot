@@ -4,12 +4,37 @@ import 'package:bumble_bot/presentation/screens/notofication.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
+import '../../../data/model/profile_model.dart';
+import '../../../data/repository/profile_repository.dart';
 import '../../global/colors.dart';
 
-class CardProfileNotification extends StatelessWidget {
+class CardProfileNotification extends StatefulWidget {
   const CardProfileNotification({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<CardProfileNotification> createState() =>
+      _CardProfileNotificationState();
+}
+
+class _CardProfileNotificationState extends State<CardProfileNotification> {
+  bool isLoading = true;
+  late ProfileModel profileData;
+  getProfile(context) async {
+    await ProfileRepository().getProfileRepo().then((value) {
+      setState(() {
+        profileData = value;
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +63,28 @@ class CardProfileNotification extends StatelessWidget {
               color: cBlack,
               borderRadius: BorderRadius.circular(100),
             ),
+            child: isLoading
+                ? Container()
+                : profileData.data.profile_picture == ''
+                    ? Container()
+                    : Image.network(
+                        profileData.data.profile_picture,
+                        fit: BoxFit.cover,
+                      ),
           ),
           SizedBox(
             width: sWidthDynamic(context, 0.8) - 50 - 30,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Hera Sugara Anata Katsuyo', style: h3(cBlack)),
-                Text('@era Sugara Anata Katsuyo', style: h5(cGray))
+                Text(
+                  isLoading ? "..." : profileData.data.name,
+                  style: h3(cBlack),
+                ),
+                Text(
+                  isLoading ? "..." : profileData.data.email,
+                  style: h5(cGray),
+                )
               ],
             ),
           ),

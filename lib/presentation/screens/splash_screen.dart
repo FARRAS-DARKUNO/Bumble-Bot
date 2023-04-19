@@ -1,3 +1,4 @@
+import 'package:bumble_bot/data/repository/profile_repository.dart';
 import 'package:bumble_bot/presentation/screens/login.dart';
 import 'package:bumble_bot/presentation/widgets/navigation/navigation.dart';
 import 'package:flutter/material.dart';
@@ -15,26 +16,41 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+gotoLogin(context) {
+  Future.delayed(const Duration(seconds: 3)).then((value) => {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Login(),
+            ))
+      });
+}
+
+gotoNext(context) {
+  Future.delayed(const Duration(seconds: 3)).then((value) => {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Navigation(),
+            ))
+      });
+}
+
 getToken(context) async {
   final pref = await SharedPreferences.getInstance();
   var token = pref.getString('Token') ?? '';
 
   if (token == '') {
-    Future.delayed(const Duration(seconds: 3)).then((value) => {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const Login(),
-              ))
-        });
+    gotoLogin(context);
   } else {
-    Future.delayed(const Duration(seconds: 3)).then((value) => {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const Navigation(),
-              ))
-        });
+    try {
+      ProfileRepository().getProfileRepo().then((value) async {
+        await pref.setString('Wallet', value.data.wallet);
+        gotoNext(context);
+      });
+    } catch (_) {
+      gotoLogin(context);
+    }
   }
 }
 

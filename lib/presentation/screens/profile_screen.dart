@@ -1,3 +1,4 @@
+import 'package:bumble_bot/data/model/profile_model.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
@@ -10,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../data/repository/profile_repository.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     Key? key,
@@ -20,6 +23,23 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool isLoading = true;
+  late ProfileModel profileData;
+  getProfile(context) async {
+    await ProfileRepository().getProfileRepo().then((value) {
+      setState(() {
+        profileData = value;
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +74,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     borderRadius: BorderRadius.circular(100),
                     border: Border.all(color: cWhite, width: 2),
                   ),
+                  child: isLoading
+                      ? Container()
+                      : profileData.data.profile_picture == ''
+                          ? Container()
+                          : Image.network(
+                              profileData.data.profile_picture,
+                              fit: BoxFit.cover,
+                            ),
                 ),
                 Text(
-                  'Abdurrachman Farras Al-Haddad ',
+                  isLoading ? "..." : profileData.data.name,
                   style: h1(cBlack),
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Abdurrachman Farras Al-Haddad ',
+                  isLoading ? "..." : profileData.data.email,
                   style: h4(cGray),
                   textAlign: TextAlign.center,
                 ),
