@@ -4,6 +4,7 @@ import 'package:bumble_bot/presentation/screens/notofication.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
+import '../../../data/api/base_url.dart';
 import '../../../data/model/profile_model.dart';
 import '../../../data/repository/profile_repository.dart';
 import '../../global/colors.dart';
@@ -67,9 +68,10 @@ class _CardProfileNotificationState extends State<CardProfileNotification> {
                 ? Container()
                 : profileData.data.profile_picture == ''
                     ? Container()
-                    : Image.network(
-                        profileData.data.profile_picture,
-                        fit: BoxFit.cover,
+                    : CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(
+                            "$imageUrl${profileData.data.profile_picture}"),
                       ),
           ),
           SizedBox(

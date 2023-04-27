@@ -1,13 +1,14 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:bumble_bot/data/model/profile_model.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../api/base_url.dart';
 import '../model/status_message_model.dart';
 
 class ProfileRepository {
+  var dio = Dio();
   Future<ProfileModel> getProfileRepo() async {
     final pref = await SharedPreferences.getInstance();
     var token = pref.getString('Token') ?? '';
@@ -16,40 +17,52 @@ class ProfileRepository {
     Map data = {"email": email};
     var body = json.encode(data);
 
-    var response = await http.post(url,
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': "Bearer $token",
-        },
-        body: body);
+    var response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': "Bearer $token",
+      },
+      body: body,
+    );
 
     return ProfileModel.fromJson(response.body);
   }
 
   Future<StatusMessageModel> postEditProfile(
-    String name,
-    String numberPhone,
-    String profilePicture,
-    String password,
+    String? name,
+    String? numberPhone,
+    File? profilePicture,
+    String? password,
   ) async {
     final pref = await SharedPreferences.getInstance();
     var token = pref.getString('Token') ?? '';
-    var url = Uri.https(baseUrl, 'bumblebot/lihatprofile');
-    Map data = {
+    var email = pref.getString('Email') ?? '';
+
+    FormData formdata = FormData.fromMap({
+      "email": email,
       "name": name,
       "phone_number": numberPhone,
-      "profile_picture": profilePicture,
-      "password": password
-    };
-    var body = json.encode(data);
+      "password": password,
+      "profile_picture": profilePicture != null
+          ? await MultipartFile.fromFile(
+              profilePicture.path,
+              filename: profilePicture.path.split('/').last,
+            )
+          : null
+    });
 
-    var response = await http.post(url,
+    var response = await dio.post(
+      "https://sisiteknis.com/bumblebot/updateprofil",
+      data: formdata,
+      options: Options(
         headers: {
-          "Content-Type": "application/json",
+          "accept": "*/*",
           'Authorization': "Bearer $token",
+          "Content-Type": "multipart/form-data"
         },
-        body: body);
-
-    return StatusMessageModel.fromJson(response.body);
+      ),
+    );
+    return StatusMessageModel.fromMap(response.data);
   }
 }

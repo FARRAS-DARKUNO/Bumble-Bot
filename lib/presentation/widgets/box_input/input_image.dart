@@ -72,25 +72,6 @@ class _InputImageState extends State<InputImage> {
                         ),
                       ),
                     ),
-                    // GestureDetector(
-                    //   onTap: () => getVideoTake(),
-                    //   child: Container(
-                    //     margin: const EdgeInsets.all(10),
-                    //     decoration: const BoxDecoration(
-                    //       color: cPremier,
-                    //       borderRadius: BorderRadius.all(Radius.circular(20)),
-                    //     ),
-                    //     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    //     height: 50,
-                    //     width: sWidthDynamic(context, 0.9),
-                    //     child: Row(
-                    //       children: [
-                    //         const Icon(Icons.video_call, color: cWhite),
-                    //         Text('  Take Video', style: h3(cWhite))
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     GestureDetector(
                       onTap: () => getImageGalery(),
                       child: Container(

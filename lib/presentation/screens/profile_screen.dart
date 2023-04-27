@@ -1,3 +1,4 @@
+import 'package:bumble_bot/data/api/base_url.dart';
 import 'package:bumble_bot/data/model/profile_model.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
@@ -78,9 +79,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ? Container()
                       : profileData.data.profile_picture == ''
                           ? Container()
-                          : Image.network(
-                              profileData.data.profile_picture,
-                              fit: BoxFit.cover,
+                          : CircleAvatar(
+                              radius: 100,
+                              backgroundImage: NetworkImage(
+                                  "$imageUrl${profileData.data.profile_picture}"),
                             ),
                 ),
                 Text(
