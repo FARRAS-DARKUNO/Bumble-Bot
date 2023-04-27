@@ -1,50 +1,61 @@
 import 'dart:async';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:bumble_bot/presentation/screens/splash_screen.dart';
 import 'package:bumble_bot/provider/location_bloc/location_bloc.dart';
-import 'data/model/received_model.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await FCMConfig.instance.init(
+    onBackgroundMessage: _firebaseMessagingBackgroundHandler,
+    defaultAndroidForegroundIcon:
+        '@mipmap/ic_launcher', //default is @mipmap/ic_launcher
+    defaultAndroidChannel: const AndroidNotificationChannel(
+      'high_importance_channel', // same as value from android setup
+      'Fcm config',
+      importance: Importance.high,
+      sound: RawResourceAndroidNotificationSound('notification'),
+    ),
+  );
+
+  FCMConfig.instance.messaging.getToken().then((token) {
+    print(token);
+  });
+
+  await FCMConfig.instance.getInitialMessage();
 
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => LocationBloc()),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+    return FCMNotificationClickListener(
+      onNotificationClick:
+          (RemoteMessage notification, void Function() setState) {
+        print(notification.data.toString());
+      },
+      child: FCMNotificationListener(
+        onNotification:
+            (RemoteMessage notification, void Function() setState) {},
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => LocationBloc()),
+          ],
+          child: MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: const SplashScreen(),
+          ),
         ),
-        home: const SplashScreen(),
       ),
     );
   }
