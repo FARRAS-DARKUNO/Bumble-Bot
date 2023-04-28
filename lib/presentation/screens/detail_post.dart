@@ -1,3 +1,4 @@
+import 'package:bumble_bot/data/repository/contain_repository.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/comments.dart';
@@ -6,13 +7,30 @@ import 'package:bumble_bot/presentation/widgets/contain/comments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '../../data/model/post_contain_model.dart';
 import '../global/colors.dart';
 import '../widgets/contain/photo_post_contain.dart';
 
-class DetailPost extends StatelessWidget {
+class DetailPost extends StatefulWidget {
+  final String id;
   const DetailPost({
     Key? key,
+    required this.id,
   }) : super(key: key);
+
+  @override
+  State<DetailPost> createState() => _DetailPostState();
+}
+
+class _DetailPostState extends State<DetailPost> {
+  late PostContainModel data;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getDetail(widget.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +54,22 @@ class DetailPost extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        // const PhotoPostContain(),
+                        isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : PhotoPostContain(
+                                id: data.id,
+                                username: data.username,
+                                caption: data.caption,
+                                hastag: data.caption,
+                                image: data.image,
+                                location: data.location,
+                                profilePicture: data.profile_picture,
+                                title: data.title,
+                                name: data.name,
+                                isDetail: true,
+                              ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: const BoxDecoration(
@@ -59,5 +92,14 @@ class DetailPost extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  getDetail(String id) async {
+    ContainRepository().getDetailContainPost(id).then((value) {
+      setState(() {
+        data = value;
+        isLoading = false;
+      });
+    });
   }
 }

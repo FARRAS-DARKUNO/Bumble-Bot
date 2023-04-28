@@ -17,6 +17,7 @@ class PhotoPostContain extends StatelessWidget {
   final String hastag;
   final String location;
   final String name;
+  final bool isDetail;
 
   const PhotoPostContain({
     Key? key,
@@ -29,6 +30,7 @@ class PhotoPostContain extends StatelessWidget {
     required this.profilePicture,
     required this.title,
     required this.name,
+    required this.isDetail,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,7 @@ class PhotoPostContain extends StatelessWidget {
       width: sWidthFull(context) - 40,
       child: Column(
         children: [
-          profileUI(context, profilePicture, name, username),
+          profileUI(context, profilePicture, name, username, id, isDetail),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
             width: sWidthFull(context) - 40,
@@ -64,15 +66,15 @@ class PhotoPostContain extends StatelessWidget {
               ),
             ],
           ),
-          descriptionUi(context, caption, hastag, location),
+          descriptionUi(context, caption, hastag, location, id, isDetail),
         ],
       ),
     );
   }
 }
 
-Widget profileUI(
-    BuildContext context, String image, String name, String username) {
+Widget profileUI(BuildContext context, String image, String name,
+    String username, String id, bool isdetail) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
@@ -81,7 +83,7 @@ Widget profileUI(
         backgroundImage: NetworkImage("$imageUrl$image"),
       ),
       GestureDetector(
-        onTap: () => gotoDetail(context),
+        onTap: () => isdetail ? null : gotoDetail(context, id),
         child: SizedBox(
           width: sWidthDynamic(context, 0.97) - 50 - 80 - 40,
           child: Column(
@@ -143,10 +145,10 @@ Widget giftUi(BuildContext context) {
   );
 }
 
-Widget descriptionUi(
-    BuildContext context, String description, String hastag, String location) {
+Widget descriptionUi(BuildContext context, String description, String hastag,
+    String location, String id, bool isdetail) {
   return GestureDetector(
-    onTap: () => gotoDetail(context),
+    onTap: () => isdetail ? null : gotoDetail(context, id),
     child: Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       width: sWidthFull(context) - 45,
@@ -200,10 +202,10 @@ Widget descriptionUi(
   );
 }
 
-gotoDetail(BuildContext context) {
+gotoDetail(BuildContext context, String id) {
   pushNewScreen(
     context,
-    screen: const DetailPost(),
+    screen: DetailPost(id: id),
     withNavBar: false,
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

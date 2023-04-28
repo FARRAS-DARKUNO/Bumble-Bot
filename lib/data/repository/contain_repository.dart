@@ -75,4 +75,21 @@ class ContainRepository {
       return error.map((value) => PostContainModel.fromMap(value)).toList();
     }
   }
+
+  Future<PostContainModel> getDetailContainPost(String id) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    var response = await dio.post(
+      "https://sisiteknis.com/bumblebot/detail_post?id=$id",
+      options: Options(
+        headers: {
+          "accept": "*/*",
+          'Authorization': "Bearer $token",
+        },
+      ),
+    );
+
+    return PostContainModel.fromMap(response.data["data"]);
+  }
 }

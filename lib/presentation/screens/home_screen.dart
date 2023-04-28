@@ -85,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           profilePicture: value.profile_picture,
                           title: value.title,
                           name: value.name,
+                          isDetail: false,
                         );
                       }).toList()),
                 const SizedBox(height: 30)
