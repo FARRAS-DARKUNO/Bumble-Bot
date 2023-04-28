@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bumble_bot/data/model/post_contain_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,29 @@ class ContainRepository {
         'message': "Terdapat Kesalahan"
       };
       return StatusMessageModel.fromMap(error);
+    }
+  }
+
+  Future<List<PostContainModel>> getContainPost(int page) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    var response = await dio.post(
+      "https://sisiteknis.com/bumblebot/get_posts?page=$page",
+      options: Options(
+        headers: {
+          "accept": "*/*",
+          'Authorization': "Bearer $token",
+        },
+      ),
+    );
+
+    if (response.statusCode! >= 200 && response.statusCode! <= 300) {
+      final List result = response.data["data"];
+      return result.map((value) => PostContainModel.fromMap(value)).toList();
+    } else {
+      var error = [];
+      return error.map((value) => PostContainModel.fromMap(value)).toList();
     }
   }
 }

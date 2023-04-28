@@ -3,12 +3,32 @@ import 'package:bumble_bot/presentation/screens/detail_post.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
+import '../../../data/api/base_url.dart';
 import '../../global/colors.dart';
 import '../../global/fonts.dart';
 
 class PhotoPostContain extends StatelessWidget {
+  final String id;
+  final String username;
+  final String profilePicture;
+  final String title;
+  final String image;
+  final String caption;
+  final String hastag;
+  final String location;
+  final String name;
+
   const PhotoPostContain({
     Key? key,
+    required this.id,
+    required this.username,
+    required this.caption,
+    required this.hastag,
+    required this.image,
+    required this.location,
+    required this.profilePicture,
+    required this.title,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -23,12 +43,13 @@ class PhotoPostContain extends StatelessWidget {
       width: sWidthFull(context) - 40,
       child: Column(
         children: [
-          profileUI(context),
+          profileUI(context, profilePicture, name, username),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
             width: sWidthFull(context) - 40,
             height: 300,
             color: cBlack,
+            child: Image.network("$imageUrl$image", fit: BoxFit.cover),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,24 +64,21 @@ class PhotoPostContain extends StatelessWidget {
               ),
             ],
           ),
-          descriptionUi(context),
+          descriptionUi(context, caption, hastag, location),
         ],
       ),
     );
   }
 }
 
-Widget profileUI(BuildContext context) {
+Widget profileUI(
+    BuildContext context, String image, String name, String username) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      Container(
-        height: 50,
-        width: 50,
-        decoration: BoxDecoration(
-          color: cBlack,
-          borderRadius: BorderRadius.circular(100),
-        ),
+      CircleAvatar(
+        radius: 20,
+        backgroundImage: NetworkImage("$imageUrl$image"),
       ),
       GestureDetector(
         onTap: () => gotoDetail(context),
@@ -69,8 +87,8 @@ Widget profileUI(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Hera Sugara Anata Katsuyo', style: h4(cBlack)),
-              Text('@era Sugara Anata Katsuyo', style: h5(cGray))
+              Text(name, style: h4(cBlack)),
+              Text(username, style: h5(cGray))
             ],
           ),
         ),
@@ -125,7 +143,8 @@ Widget giftUi(BuildContext context) {
   );
 }
 
-Widget descriptionUi(BuildContext context) {
+Widget descriptionUi(
+    BuildContext context, String description, String hastag, String location) {
   return GestureDetector(
     onTap: () => gotoDetail(context),
     child: Container(
@@ -135,43 +154,46 @@ Widget descriptionUi(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of',
+            description,
             style: h4(cBlack),
             textAlign: TextAlign.justify,
           ),
-          const SizedBox(height: 10),
+          hastag == ' ' ? const SizedBox(height: 10) : Container(),
           Text(
-            '#Mantaps #Hahaia',
+            hastag,
             style: h5(cBlue),
           ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              const Icon(Icons.pin_drop_rounded, size: 14, color: cPremier),
-              SizedBox(
-                width: sWidthFull(context) - 45 - 14,
-                child: Text(
-                  '  Jl manggis Jl, auihaohsmm, sadhom , doahs , asidm, dajkda',
-                  overflow: TextOverflow.ellipsis,
-                  style: h5(cGray),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              const Icon(Icons.people, size: 14, color: cPremier),
-              SizedBox(
-                width: sWidthFull(context) - 45 - 14,
-                child: Text(
-                  '  Jl manggis Jl, auihaohsmm, sadhom , doahs , asidm, dajkdaefefefe',
-                  overflow: TextOverflow.ellipsis,
-                  style: h5(cGray),
-                ),
-              )
-            ],
-          )
+          location == ' ' ? const SizedBox(height: 10) : Container(),
+          location == ' '
+              ? Row(
+                  children: [
+                    const Icon(Icons.pin_drop_rounded,
+                        size: 14, color: cPremier),
+                    SizedBox(
+                      width: sWidthFull(context) - 45 - 14,
+                      child: Text(
+                        location,
+                        overflow: TextOverflow.ellipsis,
+                        style: h5(cGray),
+                      ),
+                    )
+                  ],
+                )
+              : Container(),
+          // const SizedBox(height: 10),
+          // Row(
+          //   children: [
+          //     const Icon(Icons.people, size: 14, color: cPremier),
+          //     SizedBox(
+          //       width: sWidthFull(context) - 45 - 14,
+          //       child: Text(
+          //         '  Jl manggis Jl, auihaohsmm, sadhom , doahs , asidm, dajkdaefefefe',
+          //         overflow: TextOverflow.ellipsis,
+          //         style: h5(cGray),
+          //       ),
+          //     )
+          //   ],
+          // )
         ],
       ),
     ),

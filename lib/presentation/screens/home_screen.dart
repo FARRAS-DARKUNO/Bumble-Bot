@@ -6,6 +6,8 @@ import 'package:bumble_bot/presentation/widgets/contain/photo_post_contain.dart'
 import 'package:bumble_bot/presentation/widgets/contain/slide_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../data/model/post_contain_model.dart';
+import '../../data/repository/contain_repository.dart';
 import '../widgets/contain/carousel_slider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +20,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<PostContainModel> data = [];
+
+  int page = 1;
+  bool isLoading = true;
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(scrollHandle);
+    getListPost();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -28,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SizedBox(
           height: sHeightScreen(context),
           child: SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               children: <Widget>[
                 const CardProfileNotification(),
@@ -53,13 +69,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.topLeft,
                   child: Text('Lates News', style: h4(cGray)),
                 ),
-                const PhotoPostContain(),
-                const SizedBox(height: 50)
+                isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Column(
+                        children: data.map((value) {
+                        return PhotoPostContain(
+                          id: value.id,
+                          username: value.username,
+                          caption: value.caption,
+                          hastag: value.hashtag,
+                          image: value.image,
+                          location: value.location,
+                          profilePicture: value.profile_picture,
+                          title: value.title,
+                          name: value.name,
+                        );
+                      }).toList()),
+                const SizedBox(height: 30)
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  getListPost() async {
+    try {
+      ContainRepository().getContainPost(page).then((value) {
+        setState(() {
+          data = data + value;
+          isLoading = false;
+          page += 1;
+        });
+      });
+    } catch (_) {}
+  }
+
+  scrollHandle() {
+    if (isLoading) return;
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      getListPost();
+    }
   }
 }

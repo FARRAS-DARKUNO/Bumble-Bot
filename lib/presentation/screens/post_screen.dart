@@ -1,3 +1,5 @@
+import 'package:bumble_bot/data/model/post_contain_model.dart';
+import 'package:bumble_bot/data/repository/contain_repository.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
@@ -19,6 +21,19 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  List<PostContainModel> data = [];
+
+  int page = 1;
+  bool isLoading = true;
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(scrollHandle);
+    getListPost();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -29,6 +44,7 @@ class _PostScreenState extends State<PostScreen> {
             height: sHeightScreen(context),
             width: sWidthFull(context),
             child: SingleChildScrollView(
+              controller: scrollController,
               child: Column(
                 children: <Widget>[
                   Container(
@@ -95,15 +111,25 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Column(
-                    children: const <Widget>[
-                      PhotoPostContain(),
-                      PhotoPostContain(),
-                      PhotoPostContain(),
-                      PhotoPostContain(),
-                      SizedBox(height: 50)
-                    ],
-                  )
+                  isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Column(
+                          children: data.map((value) {
+                          return PhotoPostContain(
+                            id: value.id,
+                            username: value.username,
+                            caption: value.caption,
+                            hastag: value.hashtag,
+                            image: value.image,
+                            location: value.location,
+                            profilePicture: value.profile_picture,
+                            title: value.title,
+                            name: value.name,
+                          );
+                        }).toList()),
+                  const SizedBox(height: 30)
                 ],
               ),
             ),
@@ -112,31 +138,51 @@ class _PostScreenState extends State<PostScreen> {
       ),
     );
   }
-}
 
-gotoPosting(BuildContext context) {
-  pushNewScreen(
-    context,
-    screen: Posting(),
-    withNavBar: true, // OPTIONAL VALUE. True by default.
-    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-  );
-}
+  getListPost() async {
+    try {
+      ContainRepository().getContainPost(page).then((value) {
+        setState(() {
+          data = data + value;
+          isLoading = false;
+          page += 1;
+        });
+      });
+    } catch (_) {}
+  }
 
-gotoNotification(BuildContext context) {
-  pushNewScreen(
-    context,
-    screen: const NotificationBase(),
-    withNavBar: true, // OPTIONAL VALUE. True by default.
-    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-  );
-}
+  scrollHandle() {
+    if (isLoading) return;
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      getListPost();
+    }
+  }
 
-gotoChats(BuildContext context) {
-  pushNewScreen(
-    context,
-    screen: const ListCats(),
-    withNavBar: true, // OPTIONAL VALUE. True by default.
-    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-  );
+  gotoPosting(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: Posting(),
+      withNavBar: true, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
+
+  gotoNotification(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: const NotificationBase(),
+      withNavBar: true, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
+
+  gotoChats(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: const ListCats(),
+      withNavBar: true, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
 }

@@ -36,7 +36,7 @@ class DetailPost extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        const PhotoPostContain(),
+                        // const PhotoPostContain(),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: const BoxDecoration(
