@@ -22,10 +22,6 @@ Future<void> main() async {
     ),
   );
 
-  FCMConfig.instance.messaging.getToken().then((token) {
-    print(token);
-  });
-
   await FCMConfig.instance.getInitialMessage();
 
   runApp(const MyApp());
@@ -49,7 +45,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => LocationBloc()),
           ],
           child: MaterialApp(
-            title: 'Flutter Demo',
+            title: 'Bumble Bot',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),

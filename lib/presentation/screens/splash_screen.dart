@@ -1,6 +1,8 @@
+import 'package:bumble_bot/data/repository/fcm_repositoty.dart';
 import 'package:bumble_bot/data/repository/profile_repository.dart';
 import 'package:bumble_bot/presentation/screens/login.dart';
 import 'package:bumble_bot/presentation/widgets/navigation/navigation.dart';
+import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,7 +46,10 @@ getToken(context) async {
     gotoLogin(context);
   } else {
     try {
-      ProfileRepository().getProfileRepo().then((value) async {
+      var tokenFCM = await FCMConfig.instance.messaging.getToken();
+
+      await FCMRepository().updateFCMRepo(tokenFCM!);
+      await ProfileRepository().getProfileRepo().then((value) async {
         await pref.setString('Wallet', value.data.wallet);
         await pref.setString('Email', value.data.email);
         gotoNext(context);

@@ -4,6 +4,7 @@ import 'package:bumble_bot/presentation/widgets/button/button_on_wallet.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../global/size.dart';
 import '../widgets/box_input/amount_dropdown.dart';
 import '../widgets/box_input/password.dart';
@@ -22,6 +23,23 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   final username = TextEditingController();
   final password = TextEditingController();
+  String walletToken = '';
+
+  getTokenWalet() async {
+    final pref = await SharedPreferences.getInstance();
+    var wallet = pref.getString('Wallet') ?? '';
+    setState(() {
+      walletToken = wallet;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getTokenWalet();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -33,7 +51,7 @@ class _WalletScreenState extends State<WalletScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  waletUi(context),
+                  waletUi(context, walletToken),
                   const CardWallet(),
                   const ButtonOnWallet(),
                   const SizedBox(height: 10),
@@ -57,7 +75,7 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 }
 
-Widget waletUi(BuildContext context) {
+Widget waletUi(BuildContext context, String tokenWallet) {
   return Container(
     padding: const EdgeInsets.all(20),
     child: Row(
@@ -75,9 +93,16 @@ Widget waletUi(BuildContext context) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('wikbbkdiaoewrhanofenafas', style: h5(cGray)),
+              SizedBox(
+                width: sWidthDynamic(context, 0.64) - 24 - 30,
+                child: Text(
+                  tokenWallet,
+                  style: h5(cGray),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               GestureDetector(
-                onTap: () => onCopy('dsa'),
+                onTap: () => onCopy(tokenWallet),
                 child: const Icon(
                   Icons.copy,
                   color: cTersier,
