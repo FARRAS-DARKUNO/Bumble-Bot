@@ -6,7 +6,8 @@ import '../../global/colors.dart';
 import '../../global/size.dart';
 
 class InputImage extends StatefulWidget {
-  const InputImage({Key? key}) : super(key: key);
+  final ValueChanged onChangeFile;
+  const InputImage({Key? key, required this.onChangeFile}) : super(key: key);
 
   @override
   State<InputImage> createState() => _InputImageState();
@@ -21,6 +22,7 @@ class _InputImageState extends State<InputImage> {
       final XFile? imagePicker =
           await picker.pickImage(source: ImageSource.gallery);
       file = imagePicker == null ? null : File(imagePicker.path);
+      widget.onChangeFile(file);
       setState(() {});
     }
 
@@ -29,6 +31,7 @@ class _InputImageState extends State<InputImage> {
       final XFile? imagePicker =
           await picker.pickImage(source: ImageSource.camera);
       file = imagePicker == null ? null : File(imagePicker.path);
+      widget.onChangeFile(file);
       setState(() {});
     }
 

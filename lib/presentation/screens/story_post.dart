@@ -26,7 +26,7 @@ class StoryPost extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 30),
-                        const InputImage(),
+                        // const InputImage(file: ima),
                         const SizedBox(height: 30),
                         TextNormalInput(hintText: 'Caption', text: caption),
                         const SizedBox(height: 30),

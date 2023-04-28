@@ -5,8 +5,13 @@ import '../../global/colors.dart';
 import '../../global/size.dart';
 
 class HashtagDropdown extends StatefulWidget {
+  final TextEditingController text;
   final String hintText;
-  const HashtagDropdown({Key? key, required this.hintText}) : super(key: key);
+  const HashtagDropdown({
+    Key? key,
+    required this.hintText,
+    required this.text,
+  }) : super(key: key);
 
   @override
   State<HashtagDropdown> createState() => _HashtagDropdownState();
@@ -30,6 +35,7 @@ class _HashtagDropdownState extends State<HashtagDropdown> {
           SizedBox(
             width: sWidthDynamic(context, 0.58),
             child: TextField(
+              controller: widget.text,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.hintText,
