@@ -4,8 +4,10 @@ import 'package:bumble_bot/data/repository/profile_repository.dart';
 import 'package:bumble_bot/presentation/widgets/alert/alert_dynamic.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/text_normal_input.dart';
 import 'package:bumble_bot/presentation/widgets/button/normal_button.dart';
+import 'package:bumble_bot/presentation/widgets/navigation/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 import '../global/colors.dart';
 import '../global/size.dart';
@@ -44,7 +46,7 @@ class _EditProfileState extends State<EditProfile> {
       '',
     )
         .then((_) {
-      Navigator.pop(context);
+      goBack(context);
       alertDynamic(context, _.status, _.message);
     });
   }
@@ -111,4 +113,13 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+}
+
+goBack(BuildContext context) {
+  pushNewScreen(
+    context,
+    screen: const Navigation(),
+    withNavBar: false, // OPTIONAL VALUE. True by default.
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
 }
