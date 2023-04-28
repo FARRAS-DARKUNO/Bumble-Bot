@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bumble_bot/data/repository/profile_repository.dart';
+import 'package:bumble_bot/presentation/widgets/alert/alert_dynamic.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/text_normal_input.dart';
 import 'package:bumble_bot/presentation/widgets/button/normal_button.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  bool isLoading = false;
   File? file;
   final name = TextEditingController();
   String nameTag = 'Name';
@@ -33,12 +35,18 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   onSubmit() async {
-    await ProfileRepository().postEditProfile(
+    setState(() => isLoading = true);
+    await ProfileRepository()
+        .postEditProfile(
       name.value.text,
       '',
       file,
       '',
-    );
+    )
+        .then((_) {
+      Navigator.pop(context);
+      alertDynamic(context, _.status, _.message);
+    });
   }
 
   @override
@@ -89,9 +97,9 @@ class _EditProfileState extends State<EditProfile> {
                     TextNormalInput(hintText: nameTag, text: name),
                     const SizedBox(height: 30),
                     GestureDetector(
-                      onTap: () => onSubmit(),
-                      child: const NormalButton(
-                        title: 'Submit',
+                      onTap: () => isLoading ? null : onSubmit(),
+                      child: NormalButton(
+                        title: isLoading ? "Loading..." : "Submit",
                       ),
                     )
                   ],

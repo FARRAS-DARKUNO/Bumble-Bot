@@ -9,6 +9,7 @@ import 'package:bumble_bot/presentation/widgets/button/post_story_gift.dart';
 import 'package:bumble_bot/presentation/widgets/catalog/follow_and_like.dart';
 import 'package:bumble_bot/presentation/widgets/catalog/sosmed.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,6 +44,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: cPremier,
+    ));
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(

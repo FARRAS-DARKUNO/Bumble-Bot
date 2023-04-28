@@ -5,6 +5,7 @@ import 'package:bumble_bot/presentation/widgets/card/card_profile_notification.d
 import 'package:bumble_bot/presentation/widgets/contain/photo_post_contain.dart';
 import 'package:bumble_bot/presentation/widgets/contain/slide_post.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../widgets/contain/carousel_slider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +20,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: cPremier,
+    ));
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
