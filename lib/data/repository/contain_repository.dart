@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bumble_bot/data/model/post_contain_model.dart';
@@ -91,5 +92,59 @@ class ContainRepository {
     );
 
     return PostContainModel.fromMap(response.data["data"]);
+  }
+
+  Future<StatusMessageModel> postFollow(
+    String username,
+    String action,
+  ) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    FormData formdata = FormData.fromMap({
+      "username": username,
+      "action": action,
+    });
+
+    var response = await dio.post(
+      "https://sisiteknis.com/bumblebot/followunfollow",
+      data: formdata,
+      options: Options(
+        headers: {
+          "accept": "*/*",
+          'Authorization': "Bearer $token",
+          "Content-Type": "multipart/form-data"
+        },
+      ),
+    );
+
+    return StatusMessageModel.fromMap(response.data);
+  }
+
+  Future<StatusMessageModel> postLike(
+    String postid,
+    String action,
+  ) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    FormData formdata = FormData.fromMap({
+      "post_id": postid,
+      "action": action,
+    });
+
+    var response = await dio.post(
+      "https://sisiteknis.com/bumblebot/likedislike",
+      data: formdata,
+      options: Options(
+        headers: {
+          "accept": "*/*",
+          'Authorization': "Bearer $token",
+          "Content-Type": "multipart/form-data"
+        },
+      ),
+    );
+
+    return StatusMessageModel.fromMap(response.data);
   }
 }

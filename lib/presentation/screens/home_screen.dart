@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import '../../data/model/post_contain_model.dart';
 import '../../data/repository/contain_repository.dart';
 import '../widgets/contain/carousel_slider.dart';
+import '../widgets/contain/video_post_contain.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -88,7 +89,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 name: value.name,
                                 isDetail: false,
                               )
-                            : Container();
+                            : VideoPostContain(
+                                id: value.id,
+                                username: value.username,
+                                caption: value.caption,
+                                hastag: value.hashtag,
+                                image: value.image,
+                                location: value.location,
+                                profilePicture: value.profile_picture,
+                                title: value.title,
+                                name: value.name,
+                                isDetail: false,
+                              );
+                        ;
                       }).toList()),
                 const SizedBox(height: 30)
               ],
