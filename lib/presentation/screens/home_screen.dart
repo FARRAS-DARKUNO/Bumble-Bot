@@ -75,18 +75,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     : Column(
                         children: data.map((value) {
-                        return PhotoPostContain(
-                          id: value.id,
-                          username: value.username,
-                          caption: value.caption,
-                          hastag: value.hashtag,
-                          image: value.image,
-                          location: value.location,
-                          profilePicture: value.profile_picture,
-                          title: value.title,
-                          name: value.name,
-                          isDetail: false,
-                        );
+                        return value.typefile == 'image'
+                            ? PhotoPostContain(
+                                id: value.id,
+                                username: value.username,
+                                caption: value.caption,
+                                hastag: value.hashtag,
+                                image: value.image,
+                                location: value.location,
+                                profilePicture: value.profile_picture,
+                                title: value.title,
+                                name: value.name,
+                                isDetail: false,
+                              )
+                            : Container();
                       }).toList()),
                 const SizedBox(height: 30)
               ],

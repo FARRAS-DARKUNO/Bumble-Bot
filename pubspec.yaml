@@ -55,6 +55,7 @@ dependencies:
   # flutter_local_notifications: ^8.2.0
   dio: ^5.1.1
   fcm_config: ^3.5.1
+  video_player: ^2.6.1
 
 dev_dependencies:
   flutter_test:

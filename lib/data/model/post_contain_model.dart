@@ -15,6 +15,7 @@ class PostContainModel {
   final String history;
   final String likes;
   final String dislikes;
+  final String typefile;
   PostContainModel({
     required this.id,
     required this.username,
@@ -30,6 +31,7 @@ class PostContainModel {
     required this.history,
     required this.likes,
     required this.dislikes,
+    required this.typefile,
   });
 
   PostContainModel copyWith({
@@ -47,6 +49,7 @@ class PostContainModel {
     String? history,
     String? likes,
     String? dislikes,
+    String? typefile,
   }) {
     return PostContainModel(
       id: id ?? this.id,
@@ -63,6 +66,7 @@ class PostContainModel {
       history: history ?? this.history,
       likes: likes ?? this.likes,
       dislikes: dislikes ?? this.dislikes,
+      typefile: typefile ?? this.typefile,
     );
   }
 
@@ -83,6 +87,7 @@ class PostContainModel {
     result.addAll({'history': history});
     result.addAll({'likes': likes});
     result.addAll({'dislikes': dislikes});
+    result.addAll({'typefile': typefile});
 
     return result;
   }
@@ -103,6 +108,7 @@ class PostContainModel {
       history: map['history'] ?? '',
       likes: map['likes'] ?? '',
       dislikes: map['dislikes'] ?? '',
+      typefile: map['typefile'] ?? '',
     );
   }
 
@@ -113,7 +119,7 @@ class PostContainModel {
 
   @override
   String toString() {
-    return 'PostContainModel(id: $id, username: $username, name: $name, profile_picture: $profile_picture, type: $type, title: $title, image: $image, caption: $caption, hashtag: $hashtag, location: $location, created_at: $created_at, history: $history, likes: $likes, dislikes: $dislikes)';
+    return 'PostContainModel(id: $id, username: $username, name: $name, profile_picture: $profile_picture, type: $type, title: $title, image: $image, caption: $caption, hashtag: $hashtag, location: $location, created_at: $created_at, history: $history, likes: $likes, dislikes: $dislikes, typefile: $typefile)';
   }
 
   @override
@@ -134,7 +140,8 @@ class PostContainModel {
         other.created_at == created_at &&
         other.history == history &&
         other.likes == likes &&
-        other.dislikes == dislikes;
+        other.dislikes == dislikes &&
+        other.typefile == typefile;
   }
 
   @override
@@ -152,6 +159,7 @@ class PostContainModel {
         created_at.hashCode ^
         history.hashCode ^
         likes.hashCode ^
-        dislikes.hashCode;
+        dislikes.hashCode ^
+        typefile.hashCode;
   }
 }

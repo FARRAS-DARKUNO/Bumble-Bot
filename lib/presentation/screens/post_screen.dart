@@ -4,6 +4,7 @@ import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/screens/posting.dart';
+import 'package:bumble_bot/presentation/widgets/contain/video_post_contain.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
@@ -117,18 +118,31 @@ class _PostScreenState extends State<PostScreen> {
                         )
                       : Column(
                           children: data.map((value) {
-                          return PhotoPostContain(
-                            id: value.id,
-                            username: value.username,
-                            caption: value.caption,
-                            hastag: value.hashtag,
-                            image: value.image,
-                            location: value.location,
-                            profilePicture: value.profile_picture,
-                            title: value.title,
-                            name: value.name,
-                            isDetail: false,
-                          );
+                          return value.typefile == 'image'
+                              ? PhotoPostContain(
+                                  id: value.id,
+                                  username: value.username,
+                                  caption: value.caption,
+                                  hastag: value.hashtag,
+                                  image: value.image,
+                                  location: value.location,
+                                  profilePicture: value.profile_picture,
+                                  title: value.title,
+                                  name: value.name,
+                                  isDetail: false,
+                                )
+                              : VideoPostContain(
+                                  id: value.id,
+                                  username: value.username,
+                                  caption: value.caption,
+                                  hastag: value.hashtag,
+                                  image: value.image,
+                                  location: value.location,
+                                  profilePicture: value.profile_picture,
+                                  title: value.title,
+                                  name: value.name,
+                                  isDetail: false,
+                                );
                         }).toList()),
                   const SizedBox(height: 30)
                 ],
