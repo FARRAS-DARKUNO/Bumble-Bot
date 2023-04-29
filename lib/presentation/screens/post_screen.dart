@@ -130,6 +130,8 @@ class _PostScreenState extends State<PostScreen> {
                                   title: value.title,
                                   name: value.name,
                                   isDetail: false,
+                                  isFollow: value.isfollow,
+                                  isLike: value.islike,
                                 )
                               : VideoPostContain(
                                   id: value.id,
@@ -142,6 +144,8 @@ class _PostScreenState extends State<PostScreen> {
                                   title: value.title,
                                   name: value.name,
                                   isDetail: false,
+                                  isFollow: value.isfollow,
+                                  isLike: value.islike,
                                 );
                         }).toList()),
                   const SizedBox(height: 30)

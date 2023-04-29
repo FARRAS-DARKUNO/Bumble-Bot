@@ -88,6 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 title: value.title,
                                 name: value.name,
                                 isDetail: false,
+                                isFollow: value.isfollow,
+                                isLike: value.islike,
                               )
                             : VideoPostContain(
                                 id: value.id,
@@ -100,8 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 title: value.title,
                                 name: value.name,
                                 isDetail: false,
+                                isFollow: value.isfollow,
+                                isLike: value.islike,
                               );
-                        ;
                       }).toList()),
                 const SizedBox(height: 30)
               ],

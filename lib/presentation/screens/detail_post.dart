@@ -4,6 +4,7 @@ import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/comments.dart';
 import 'package:bumble_bot/presentation/widgets/button/back_button_category.dart';
 import 'package:bumble_bot/presentation/widgets/contain/comments.dart';
+import 'package:bumble_bot/presentation/widgets/contain/video_post_contain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
@@ -58,18 +59,35 @@ class _DetailPostState extends State<DetailPost> {
                             ? const Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : PhotoPostContain(
-                                id: data.id,
-                                username: data.username,
-                                caption: data.caption,
-                                hastag: data.caption,
-                                image: data.image,
-                                location: data.location,
-                                profilePicture: data.profile_picture,
-                                title: data.title,
-                                name: data.name,
-                                isDetail: true,
-                              ),
+                            : data.typefile == 'image'
+                                ? PhotoPostContain(
+                                    id: data.id,
+                                    username: data.username,
+                                    caption: data.caption,
+                                    hastag: data.caption,
+                                    image: data.image,
+                                    location: data.location,
+                                    profilePicture: data.profile_picture,
+                                    title: data.title,
+                                    name: data.name,
+                                    isDetail: true,
+                                    isFollow: data.isfollow,
+                                    isLike: data.islike,
+                                  )
+                                : VideoPostContain(
+                                    id: data.id,
+                                    username: data.username,
+                                    caption: data.caption,
+                                    hastag: data.caption,
+                                    image: data.image,
+                                    location: data.location,
+                                    profilePicture: data.profile_picture,
+                                    title: data.title,
+                                    name: data.name,
+                                    isDetail: true,
+                                    isFollow: data.isfollow,
+                                    isLike: data.islike,
+                                  ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: const BoxDecoration(

@@ -3,6 +3,7 @@ import 'dart:convert';
 class PostContainModel {
   final String id;
   final String username;
+  final String userid;
   final String name;
   final String profile_picture;
   final String type;
@@ -16,9 +17,12 @@ class PostContainModel {
   final String likes;
   final String dislikes;
   final String typefile;
+  final int isfollow;
+  final int islike;
   PostContainModel({
     required this.id,
     required this.username,
+    required this.userid,
     required this.name,
     required this.profile_picture,
     required this.type,
@@ -32,11 +36,14 @@ class PostContainModel {
     required this.likes,
     required this.dislikes,
     required this.typefile,
+    required this.isfollow,
+    required this.islike,
   });
 
   PostContainModel copyWith({
     String? id,
     String? username,
+    String? userid,
     String? name,
     String? profile_picture,
     String? type,
@@ -50,10 +57,13 @@ class PostContainModel {
     String? likes,
     String? dislikes,
     String? typefile,
+    int? isfollow,
+    int? islike,
   }) {
     return PostContainModel(
       id: id ?? this.id,
       username: username ?? this.username,
+      userid: userid ?? this.userid,
       name: name ?? this.name,
       profile_picture: profile_picture ?? this.profile_picture,
       type: type ?? this.type,
@@ -67,6 +77,8 @@ class PostContainModel {
       likes: likes ?? this.likes,
       dislikes: dislikes ?? this.dislikes,
       typefile: typefile ?? this.typefile,
+      isfollow: isfollow ?? this.isfollow,
+      islike: islike ?? this.islike,
     );
   }
 
@@ -75,6 +87,7 @@ class PostContainModel {
 
     result.addAll({'id': id});
     result.addAll({'username': username});
+    result.addAll({'userid': userid});
     result.addAll({'name': name});
     result.addAll({'profile_picture': profile_picture});
     result.addAll({'type': type});
@@ -88,6 +101,8 @@ class PostContainModel {
     result.addAll({'likes': likes});
     result.addAll({'dislikes': dislikes});
     result.addAll({'typefile': typefile});
+    result.addAll({'isfollow': isfollow});
+    result.addAll({'islike': islike});
 
     return result;
   }
@@ -96,6 +111,7 @@ class PostContainModel {
     return PostContainModel(
       id: map['id'] ?? '',
       username: map['username'] ?? '',
+      userid: map['userid'] ?? '',
       name: map['name'] ?? '',
       profile_picture: map['profile_picture'] ?? '',
       type: map['type'] ?? '',
@@ -109,6 +125,8 @@ class PostContainModel {
       likes: map['likes'] ?? '',
       dislikes: map['dislikes'] ?? '',
       typefile: map['typefile'] ?? '',
+      isfollow: map['isfollow']?.toInt() ?? 0,
+      islike: map['islike']?.toInt() ?? 0,
     );
   }
 
@@ -119,7 +137,7 @@ class PostContainModel {
 
   @override
   String toString() {
-    return 'PostContainModel(id: $id, username: $username, name: $name, profile_picture: $profile_picture, type: $type, title: $title, image: $image, caption: $caption, hashtag: $hashtag, location: $location, created_at: $created_at, history: $history, likes: $likes, dislikes: $dislikes, typefile: $typefile)';
+    return 'PostContainModel(id: $id, username: $username, userid: $userid, name: $name, profile_picture: $profile_picture, type: $type, title: $title, image: $image, caption: $caption, hashtag: $hashtag, location: $location, created_at: $created_at, history: $history, likes: $likes, dislikes: $dislikes, typefile: $typefile, isfollow: $isfollow, islike: $islike)';
   }
 
   @override
@@ -129,6 +147,7 @@ class PostContainModel {
     return other is PostContainModel &&
         other.id == id &&
         other.username == username &&
+        other.userid == userid &&
         other.name == name &&
         other.profile_picture == profile_picture &&
         other.type == type &&
@@ -141,13 +160,16 @@ class PostContainModel {
         other.history == history &&
         other.likes == likes &&
         other.dislikes == dislikes &&
-        other.typefile == typefile;
+        other.typefile == typefile &&
+        other.isfollow == isfollow &&
+        other.islike == islike;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
         username.hashCode ^
+        userid.hashCode ^
         name.hashCode ^
         profile_picture.hashCode ^
         type.hashCode ^
@@ -160,6 +182,8 @@ class PostContainModel {
         history.hashCode ^
         likes.hashCode ^
         dislikes.hashCode ^
-        typefile.hashCode;
+        typefile.hashCode ^
+        isfollow.hashCode ^
+        islike.hashCode;
   }
 }

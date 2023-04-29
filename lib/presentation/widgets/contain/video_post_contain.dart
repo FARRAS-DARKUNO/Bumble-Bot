@@ -4,6 +4,7 @@ import 'package:bumble_bot/presentation/widgets/contain/video_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 import '../../../data/api/base_url.dart';
+import '../../../data/repository/contain_repository.dart';
 import '../../global/colors.dart';
 import '../../global/fonts.dart';
 import 'package:video_player/video_player.dart';
@@ -19,6 +20,8 @@ class VideoPostContain extends StatefulWidget {
   final String location;
   final String name;
   final bool isDetail;
+  final int isFollow;
+  final int isLike;
 
   const VideoPostContain({
     Key? key,
@@ -32,6 +35,8 @@ class VideoPostContain extends StatefulWidget {
     required this.title,
     required this.name,
     required this.isDetail,
+    required this.isFollow,
+    required this.isLike,
   }) : super(key: key);
 
   @override
@@ -41,9 +46,15 @@ class VideoPostContain extends StatefulWidget {
 class _VideoPostContainState extends State<VideoPostContain> {
   late VideoPlayerController _controller;
 
+  bool? isFollow;
+  bool? isLike;
+
   @override
   void initState() {
     super.initState();
+    isFollow = widget.isFollow == 1 ? true : false;
+    isLike = widget.isLike == 1 ? true : false;
+
     _controller = VideoPlayerController.network(
       'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
@@ -96,10 +107,14 @@ class _VideoPostContainState extends State<VideoPostContain> {
             children: [
               giftUi(context),
               Row(
-                children: const [
-                  Icon(Icons.favorite, size: 30, color: cGray),
-                  SizedBox(width: 10),
-                  Icon(Icons.share, size: 30, color: cGray)
+                children: [
+                  GestureDetector(
+                    onTap: () => postLike(),
+                    child: Icon(Icons.favorite,
+                        size: 30, color: isLike! ? cRed : cGray),
+                  ),
+                  const SizedBox(width: 10),
+                  const Icon(Icons.share, size: 30, color: cGray)
                 ],
               ),
             ],
@@ -110,121 +125,162 @@ class _VideoPostContainState extends State<VideoPostContain> {
       ),
     );
   }
-}
 
-Widget profileUI(BuildContext context, String image, String name,
-    String username, String id, bool isdetail) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[
-      CircleAvatar(
-        radius: 20,
-        backgroundImage: NetworkImage("$imageUrl$image"),
-      ),
-      GestureDetector(
-        onTap: () => isdetail ? null : gotoDetail(context, id),
-        child: SizedBox(
-          width: sWidthDynamic(context, 0.97) - 50 - 80 - 40,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(name, style: h4(cBlack)),
-              Text(username, style: h5(cGray))
-            ],
-          ),
+  Widget profileUI(
+    BuildContext context,
+    String image,
+    String name,
+    String username,
+    String id,
+    bool isdetail,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        CircleAvatar(
+          radius: 20,
+          backgroundImage: NetworkImage("$imageUrl$image"),
         ),
-      ),
-      Container(
-        alignment: Alignment.center,
-        height: 30,
-        width: 80,
-        decoration: BoxDecoration(
-          color: cWhite,
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: const [
-            BoxShadow(
-              color: cGray,
-              blurRadius: 1,
-              offset: Offset(0, 1), // Shadow position
+        GestureDetector(
+          onTap: () => isdetail ? null : gotoDetail(context, id),
+          child: SizedBox(
+            width: sWidthDynamic(context, 0.97) - 50 - 80 - 40,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(name, style: h4(cBlack)),
+                Text(username, style: h5(cGray))
+              ],
             ),
-          ],
+          ),
         ),
-        child: Text('Unollow', style: h4(cPremier)),
-      ),
-    ],
-  );
-}
-
-Widget giftUi(BuildContext context) {
-  return Container(
-    alignment: Alignment.center,
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    decoration: BoxDecoration(
-      color: cWhite,
-      borderRadius: BorderRadius.circular(100),
-      boxShadow: const [
-        BoxShadow(
-          color: cGray,
-          blurRadius: 1,
-          offset: Offset(0, 1), // Shadow position
+        GestureDetector(
+          onTap: () => postFollow(),
+          child: Container(
+            alignment: Alignment.center,
+            height: 30,
+            width: 80,
+            decoration: BoxDecoration(
+              color: cWhite,
+              borderRadius: BorderRadius.circular(100),
+              boxShadow: const [
+                BoxShadow(
+                  color: cGray,
+                  blurRadius: 1,
+                  offset: Offset(0, 1), // Shadow position
+                ),
+              ],
+            ),
+            child: Text(isFollow! ? "Unfollow" : "Follow", style: h4(cPremier)),
+          ),
         ),
       ],
-      gradient: const LinearGradient(
-        begin: Alignment.centerLeft,
-        end: Alignment(1, 0),
-        colors: <Color>[cTersier, cPremier],
-      ),
-    ),
-    child: Row(
-      children: [
-        const Icon(Icons.wallet_giftcard, color: cWhite, size: 24),
-        Text(" Gift", style: h3(cWhite))
-      ],
-    ),
-  );
-}
+    );
+  }
 
-Widget descriptionUi(BuildContext context, String description, String hastag,
-    String location, String id, bool isdetail) {
-  return GestureDetector(
-    onTap: () => isdetail ? null : gotoDetail(context, id),
-    child: Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      width: sWidthFull(context) - 45,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  postFollow() async {
+    try {
+      await ContainRepository()
+          .postFollow(widget.username, isFollow! ? "unfollow" : "follow")
+          .then((value) {
+        setState(() {
+          isFollow = !isFollow!;
+        });
+      });
+    } catch (_) {
+      setState(() {
+        isFollow = !isFollow!;
+      });
+    }
+  }
+
+  postLike() async {
+    try {
+      await ContainRepository()
+          .postLike(widget.id, isLike! ? "hapuslike" : "like")
+          .then((value) {
+        setState(() {
+          isLike = !isLike!;
+        });
+      });
+    } catch (_) {
+      setState(() {
+        isLike = !isLike!;
+      });
+    }
+  }
+
+  Widget giftUi(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      decoration: BoxDecoration(
+        color: cWhite,
+        borderRadius: BorderRadius.circular(100),
+        boxShadow: const [
+          BoxShadow(
+            color: cGray,
+            blurRadius: 1,
+            offset: Offset(0, 1), // Shadow position
+          ),
+        ],
+        gradient: const LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment(1, 0),
+          colors: <Color>[cTersier, cPremier],
+        ),
+      ),
+      child: Row(
         children: [
-          Text(
-            description,
-            style: h4(cBlack),
-            textAlign: TextAlign.justify,
-          ),
-          hastag == ' ' ? const SizedBox(height: 10) : Container(),
-          Text(
-            hastag,
-            style: h5(cBlue),
-          ),
-          location == ' ' ? const SizedBox(height: 10) : Container(),
-          location == ' '
-              ? Row(
-                  children: [
-                    const Icon(Icons.pin_drop_rounded,
-                        size: 14, color: cPremier),
-                    SizedBox(
-                      width: sWidthFull(context) - 45 - 14,
-                      child: Text(
-                        location,
-                        overflow: TextOverflow.ellipsis,
-                        style: h5(cGray),
-                      ),
-                    )
-                  ],
-                )
-              : Container(),
+          const Icon(Icons.wallet_giftcard, color: cWhite, size: 24),
+          Text(" Gift", style: h3(cWhite))
         ],
       ),
-    ),
-  );
+    );
+  }
+
+  Widget descriptionUi(BuildContext context, String description, String hastag,
+      String location, String id, bool isdetail) {
+    return GestureDetector(
+      onTap: () => isdetail ? null : gotoDetail(context, id),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        width: sWidthFull(context) - 45,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              description,
+              style: h4(cBlack),
+              textAlign: TextAlign.justify,
+            ),
+            hastag == ' ' ? const SizedBox(height: 10) : Container(),
+            Text(
+              hastag,
+              style: h5(cBlue),
+            ),
+            location == ' ' ? const SizedBox(height: 10) : Container(),
+            location == ' '
+                ? Row(
+                    children: [
+                      const Icon(Icons.pin_drop_rounded,
+                          size: 14, color: cPremier),
+                      SizedBox(
+                        width: sWidthFull(context) - 45 - 14,
+                        child: Text(
+                          location,
+                          overflow: TextOverflow.ellipsis,
+                          style: h5(cGray),
+                        ),
+                      )
+                    ],
+                  )
+                : Container(),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 gotoDetail(BuildContext context, String id) {

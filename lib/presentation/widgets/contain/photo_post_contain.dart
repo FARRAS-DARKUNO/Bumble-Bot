@@ -19,6 +19,8 @@ class PhotoPostContain extends StatefulWidget {
   final String location;
   final String name;
   final bool isDetail;
+  final int isFollow;
+  final int isLike;
 
   const PhotoPostContain({
     Key? key,
@@ -32,6 +34,8 @@ class PhotoPostContain extends StatefulWidget {
     required this.title,
     required this.name,
     required this.isDetail,
+    required this.isFollow,
+    required this.isLike,
   }) : super(key: key);
 
   @override
@@ -39,8 +43,16 @@ class PhotoPostContain extends StatefulWidget {
 }
 
 class _PhotoPostContainState extends State<PhotoPostContain> {
-  bool isFollow = true;
-  bool isLike = false;
+  bool? isFollow;
+  bool? isLike;
+
+  @override
+  void initState() {
+    super.initState();
+
+    isFollow = widget.isFollow == 1 ? true : false;
+    isLike = widget.isLike == 1 ? true : false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +84,7 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
                   GestureDetector(
                     onTap: () => postLike(),
                     child: Icon(Icons.favorite,
-                        size: 30, color: isLike ? cRed : cGray),
+                        size: 30, color: isLike! ? cRed : cGray),
                   ),
                   const SizedBox(width: 10),
                   const Icon(Icons.share, size: 30, color: cGray)
@@ -132,7 +144,7 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
                 ),
               ],
             ),
-            child: Text(isFollow ? "Unfollow" : "Follow", style: h4(cPremier)),
+            child: Text(isFollow! ? "Unfollow" : "Follow", style: h4(cPremier)),
           ),
         ),
       ],
@@ -142,15 +154,15 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
   postFollow() async {
     try {
       await ContainRepository()
-          .postFollow(widget.username, isFollow ? "unfollow" : "follow")
+          .postFollow(widget.username, isFollow! ? "unfollow" : "follow")
           .then((value) {
         setState(() {
-          isFollow = !isFollow;
+          isFollow = !isFollow!;
         });
       });
     } catch (_) {
       setState(() {
-        isFollow = !isFollow;
+        isFollow = !isFollow!;
       });
     }
   }
@@ -158,15 +170,15 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
   postLike() async {
     try {
       await ContainRepository()
-          .postLike(widget.id, isLike ? "hapuslike" : "like")
+          .postLike(widget.id, isLike! ? "hapuslike" : "like")
           .then((value) {
         setState(() {
-          isLike = !isLike;
+          isLike = !isLike!;
         });
       });
     } catch (_) {
       setState(() {
-        isLike = !isLike;
+        isLike = !isLike!;
       });
     }
   }
