@@ -134,7 +134,7 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
             height: 30,
             width: 80,
             decoration: BoxDecoration(
-              color: cWhite,
+              color: isFollow! ? cPremier : cWhite,
               borderRadius: BorderRadius.circular(100),
               boxShadow: const [
                 BoxShadow(
@@ -144,7 +144,10 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
                 ),
               ],
             ),
-            child: Text(isFollow! ? "Unfollow" : "Follow", style: h4(cPremier)),
+            child: Text(
+              isFollow! ? "Unfollow" : "Follow",
+              style: h4(isFollow! ? cWhite : cPremier),
+            ),
           ),
         ),
       ],

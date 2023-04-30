@@ -3,6 +3,7 @@ import 'package:bumble_bot/presentation/screens/detail_post.dart';
 import 'package:bumble_bot/presentation/widgets/contain/video_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../../../data/api/base_url.dart';
 import '../../../data/repository/contain_repository.dart';
 import '../../global/colors.dart';
@@ -45,6 +46,7 @@ class VideoPostContain extends StatefulWidget {
 
 class _VideoPostContainState extends State<VideoPostContain> {
   late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
 
   bool? isFollow;
   bool? isLike;
@@ -56,15 +58,24 @@ class _VideoPostContainState extends State<VideoPostContain> {
     isLike = widget.isLike == 1 ? true : false;
 
     _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+      "$imageUrl${widget.image}",
+      // 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+      // "https://sisiteknis.com/bumblebot/uploads/pexels-karolina-grabowska-8136929-4096x2160-24fps.mp4",
+      // 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+      videoPlayerOptions: VideoPlayerOptions(
+        mixWithOthers: false,
+        allowBackgroundPlayback: false,
+      ),
     );
+
+    _initializeVideoPlayerFuture = _controller.initialize();
 
     _controller.addListener(() {
       setState(() {});
     });
-    _controller.setLooping(true);
-    _controller.initialize();
+
+    _controller.setLooping(false);
+    // _controller.initialize();
   }
 
   @override
@@ -83,46 +94,66 @@ class _VideoPostContainState extends State<VideoPostContain> {
         ),
       ),
       width: sWidthFull(context) - 40,
-      child: Column(
-        children: [
-          profileUI(context, widget.profilePicture, widget.name,
-              widget.username, widget.id, widget.isDetail),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            width: sWidthFull(context) - 40,
-            height: 300,
-            color: cBlack,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                VideoPlayer(_controller),
-                ClosedCaption(text: _controller.value.caption.text),
-                ControlsOverlay(controller: _controller),
-                VideoProgressIndicator(_controller, allowScrubbing: false),
+      child: FutureBuilder(
+          future: _initializeVideoPlayerFuture,
+          builder: (context, snapshot) {
+            return Column(
+              children: [
+                profileUI(context, widget.profilePicture, widget.name,
+                    widget.username, widget.id, widget.isDetail),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  width: sWidthFull(context) - 40,
+                  height: 300,
+                  color: cBlack,
+                  child: snapshot.connectionState == ConnectionState.done
+                      ? VisibilityDetector(
+                          key: const Key('videoPlayerKey'),
+                          onVisibilityChanged: (visibilityInfo) {
+                            if (visibilityInfo.visibleFraction == 0) {
+                              _controller.pause();
+                            } else {
+                              _controller.play();
+                            }
+                          },
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: <Widget>[
+                              VideoPlayer(_controller),
+                              ClosedCaption(
+                                  text: _controller.value.caption.text),
+                              ControlsOverlay(controller: _controller),
+                              VideoProgressIndicator(
+                                _controller,
+                                allowScrubbing: true,
+                              ),
+                            ],
+                          ),
+                        )
+                      : const Center(child: CircularProgressIndicator()),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    giftUi(context),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => postLike(),
+                          child: Icon(Icons.favorite,
+                              size: 30, color: isLike! ? cRed : cGray),
+                        ),
+                        const SizedBox(width: 10),
+                        const Icon(Icons.share, size: 30, color: cGray)
+                      ],
+                    ),
+                  ],
+                ),
+                descriptionUi(context, widget.caption, widget.hastag,
+                    widget.location, widget.id, widget.isDetail),
               ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              giftUi(context),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => postLike(),
-                    child: Icon(Icons.favorite,
-                        size: 30, color: isLike! ? cRed : cGray),
-                  ),
-                  const SizedBox(width: 10),
-                  const Icon(Icons.share, size: 30, color: cGray)
-                ],
-              ),
-            ],
-          ),
-          descriptionUi(context, widget.caption, widget.hastag, widget.location,
-              widget.id, widget.isDetail),
-        ],
-      ),
+            );
+          }),
     );
   }
 
@@ -161,7 +192,7 @@ class _VideoPostContainState extends State<VideoPostContain> {
             height: 30,
             width: 80,
             decoration: BoxDecoration(
-              color: cWhite,
+              color: isFollow! ? cPremier : cWhite,
               borderRadius: BorderRadius.circular(100),
               boxShadow: const [
                 BoxShadow(
@@ -171,7 +202,10 @@ class _VideoPostContainState extends State<VideoPostContain> {
                 ),
               ],
             ),
-            child: Text(isFollow! ? "Unfollow" : "Follow", style: h4(cPremier)),
+            child: Text(
+              isFollow! ? "Unfollow" : "Follow",
+              style: h4(isFollow! ? cWhite : cPremier),
+            ),
           ),
         ),
       ],
