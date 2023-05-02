@@ -26,22 +26,19 @@ class _ChatState extends State<Chat> {
   ChatModel? data;
 
   TextEditingController textToSendConStroller = TextEditingController();
+  Timer? timer;
 
   void _refreshPage() {
-    setState(() {
-      getChat();
-    });
+    getChat();
   }
 
-  Timer? timer;
   @override
   void initState() {
-    super.initState();
-
     getUsername();
     getChat();
     timer =
-        Timer.periodic(const Duration(seconds: 2), (Timer t) => _refreshPage());
+        Timer.periodic(const Duration(seconds: 3), (Timer t) => _refreshPage());
+    super.initState();
   }
 
   @override
@@ -156,11 +153,13 @@ class _ChatState extends State<Chat> {
 
   getChat() async {
     await ChatRepository().getChat(widget.roomId).then((value) {
-      setState(() {
-        data = value;
-        isLoading = false;
-        nameRoom = value.room_info.room_name;
-      });
+      if (mounted) {
+        setState(() {
+          data = value;
+          isLoading = false;
+          nameRoom = value.room_info.room_name;
+        });
+      }
     });
   }
 
