@@ -52,6 +52,7 @@ getToken(context) async {
       await ProfileRepository().getProfileRepo().then((value) async {
         await pref.setString('Wallet', value.data.wallet);
         await pref.setString('Email', value.data.email);
+        await pref.setString('Username', value.data.username);
         gotoNext(context);
       });
     } catch (_) {

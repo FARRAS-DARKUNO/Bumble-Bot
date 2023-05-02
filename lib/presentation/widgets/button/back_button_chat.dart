@@ -4,7 +4,8 @@ import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:flutter/material.dart';
 
 class BackButtonChat extends StatelessWidget {
-  const BackButtonChat({Key? key}) : super(key: key);
+  final String name;
+  const BackButtonChat({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class BackButtonChat extends StatelessWidget {
             alignment: Alignment.centerLeft,
             height: sHeightBackButton(context),
             width: sWidthDynamic(context, 0.9) - 40 - 30,
-            child: Text('Sarah Temen nya mamah Temen ', style: h3(cBlack)),
+            child: Text(name, style: h3(cBlack)),
           ),
         ],
       ),

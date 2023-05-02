@@ -28,26 +28,26 @@ class UserChat extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Container(
-                  height: 150,
-                  width: sWidthDynamic(context, 0.7) - 15 * 2,
-                  color: cBlack,
-                ),
-                const SizedBox(height: 5),
+                // Container(
+                //   height: 150,
+                //   width: sWidthDynamic(context, 0.7) - 15 * 2,
+                //   color: cBlack,
+                // ),
+                // const SizedBox(height: 5),
                 Text(
-                  'Hallo apa kabar sobat ? Nama saya ratna Hallo salam kenal',
+                  message,
                   style: h4(cWhite),
                   textAlign: TextAlign.start,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 5),
-          Text(
-            '02:02:91 20-29-1992',
-            style: h5(cGray),
-            textAlign: TextAlign.start,
-          ),
+          // const SizedBox(height: 5),
+          // Text(
+          //   '02:02:91 20-29-1992',
+          //   style: h5(cGray),
+          //   textAlign: TextAlign.start,
+          // ),
         ],
       ),
     );
