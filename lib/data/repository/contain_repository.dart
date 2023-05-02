@@ -4,6 +4,7 @@ import 'package:bumble_bot/data/model/post_contain_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/detail_post_model.dart';
 import '../model/status_message_model.dart';
 
 class ContainRepository {
@@ -76,7 +77,7 @@ class ContainRepository {
     }
   }
 
-  Future<PostContainModel> getDetailContainPost(String id) async {
+  Future<DetailPostModel> getDetailContainPost(String id) async {
     final pref = await SharedPreferences.getInstance();
     var token = pref.getString('Token') ?? '';
 
@@ -90,7 +91,7 @@ class ContainRepository {
       ),
     );
 
-    return PostContainModel.fromMap(response.data["data"]);
+    return DetailPostModel.fromMap(response.data["data"]);
   }
 
   Future<StatusMessageModel> postFollow(
@@ -145,5 +146,36 @@ class ContainRepository {
     );
 
     return StatusMessageModel.fromMap(response.data);
+  }
+
+  Future<StatusMessageModel> postComment(
+    String postId,
+    String komentar,
+  ) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    FormData formdata = FormData.fromMap({
+      "post_id": postId,
+      "komentar": komentar,
+    });
+
+    try {
+      var response = await dio.post(
+        "https://sisiteknis.com/bumblebot/komentar",
+        data: formdata,
+        options: Options(
+          headers: {
+            "accept": "*/*",
+            'Authorization': "Bearer $token",
+            "Content-Type": "multipart/form-data"
+          },
+        ),
+      );
+      return StatusMessageModel.fromMap(response.data);
+    } catch (_) {
+      var error = {"status": "error", "message": "jangan Spam"};
+      return StatusMessageModel.fromMap(error);
+    }
   }
 }
