@@ -1,11 +1,15 @@
 import 'package:bumble_bot/data/model/detail_user_model.dart';
+import 'package:bumble_bot/data/repository/chat_repository.dart';
 import 'package:bumble_bot/data/repository/profile_repository.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
+import 'package:bumble_bot/presentation/screens/chat.dart';
+import 'package:bumble_bot/presentation/screens/list_chat.dart';
 import 'package:bumble_bot/presentation/widgets/catalog/follow_and_like.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 import '../../data/api/base_url.dart';
 import '../../data/repository/contain_repository.dart';
@@ -108,27 +112,30 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget message() {
-    return Container(
-      width: sWidthDynamic(context, 0.4),
-      height: 40,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        color: cTersier,
-        boxShadow: [
-          BoxShadow(
-            color: cGray,
-            blurRadius: 1,
-            offset: Offset(0, 1), // Shadow position
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.message, color: cWhite, size: 30),
-          const SizedBox(width: 15),
-          Text('Message', style: h3(cWhite))
-        ],
+    return GestureDetector(
+      onTap: () => toMesaage(),
+      child: Container(
+        width: sWidthDynamic(context, 0.4),
+        height: 40,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: cTersier,
+          boxShadow: [
+            BoxShadow(
+              color: cGray,
+              blurRadius: 1,
+              offset: Offset(0, 1), // Shadow position
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.message, color: cWhite, size: 30),
+            const SizedBox(width: 15),
+            Text('Message', style: h3(cWhite))
+          ],
+        ),
       ),
     );
   }
@@ -183,5 +190,25 @@ class _UserProfileState extends State<UserProfile> {
         isFollow = !isFollow;
       });
     }
+  }
+
+  toMesaage() async {
+    await ChatRepository().postMessagePersonal(widget.username).then((value) {
+      if (value.status == 'success') {
+        pushNewScreen(
+          context,
+          screen: Chat(roomId: value.room_id.toString()),
+          withNavBar: true, // OPTIONAL VALUE. True by default.
+          pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        );
+      } else {
+        pushNewScreen(
+          context,
+          screen: const ListCats(),
+          withNavBar: true, // OPTIONAL VALUE. True by default.
+          pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        );
+      }
+    });
   }
 }

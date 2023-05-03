@@ -1,4 +1,5 @@
 import 'package:bumble_bot/data/model/chat_model.dart';
+import 'package:bumble_bot/data/model/create_chat_room_model.dart';
 import 'package:bumble_bot/data/model/list_chat_model.dart';
 import 'package:bumble_bot/data/model/status_message_model.dart';
 import 'package:dio/dio.dart';
@@ -80,6 +81,38 @@ class ChatRepository {
     } catch (error) {
       var error = {"status": "Error", "message": "Error"};
       return StatusMessageModel.fromMap(error);
+    }
+  }
+
+  Future<CreateChatRoomModel> postMessagePersonal(
+      String usernameAnother) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+    var username = pref.getString('Username') ?? '';
+    FormData formdata = FormData.fromMap({
+      "name": "$username & $usernameAnother",
+      "type": "personal",
+      "usernames": '["$username","$usernameAnother"]',
+    });
+
+    try {
+      var response = await dio.post(
+        "https://sisiteknis.com/bumblebot/chatroom",
+        data: formdata,
+        options: Options(
+          headers: {
+            "accept": "*/*",
+            'Authorization': "Bearer $token",
+          },
+        ),
+      );
+      print(response.data);
+      return CreateChatRoomModel.fromMap(response.data);
+    } catch (error) {
+      var error = {"status": "Error", "message": "Error", "room_id": -1};
+      print(error);
+
+      return CreateChatRoomModel.fromMap(error);
     }
   }
 }
