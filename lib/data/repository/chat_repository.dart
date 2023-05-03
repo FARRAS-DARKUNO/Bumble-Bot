@@ -106,9 +106,40 @@ class ChatRepository {
           },
         ),
       );
-      print(response.data);
       return CreateChatRoomModel.fromMap(response.data);
     } catch (error) {
+      var error = {"status": "Error", "message": "Error", "room_id": -1};
+
+      return CreateChatRoomModel.fromMap(error);
+    }
+  }
+
+  Future<CreateChatRoomModel> postMessageGroup(
+    String listPersonal,
+    String title,
+  ) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+    FormData formdata = FormData.fromMap({
+      "name": title,
+      "type": "group",
+      "usernames": listPersonal,
+    });
+
+    try {
+      var response = await dio.post(
+        "https://sisiteknis.com/bumblebot/chatroom",
+        data: formdata,
+        options: Options(
+          headers: {
+            "accept": "*/*",
+            'Authorization': "Bearer $token",
+          },
+        ),
+      );
+      print(response.data);
+      return CreateChatRoomModel.fromMap(response.data);
+    } catch (_) {
       var error = {"status": "Error", "message": "Error", "room_id": -1};
       print(error);
 
