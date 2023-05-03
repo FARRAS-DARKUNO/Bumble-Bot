@@ -10,6 +10,8 @@ import '../../global/colors.dart';
 import '../../global/fonts.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../screens/user_profile.dart';
+
 class VideoPostContain extends StatefulWidget {
   final String id;
   final String username;
@@ -168,9 +170,12 @@ class _VideoPostContainState extends State<VideoPostContain> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        CircleAvatar(
-          radius: 20,
-          backgroundImage: NetworkImage("$imageUrl$image"),
+        GestureDetector(
+          onTap: () => gotoUser(context, username),
+          child: CircleAvatar(
+            radius: 20,
+            backgroundImage: NetworkImage("$imageUrl$image"),
+          ),
         ),
         GestureDetector(
           onTap: () => isdetail ? null : gotoDetail(context, id),
@@ -321,6 +326,15 @@ gotoDetail(BuildContext context, String id) {
   pushNewScreen(
     context,
     screen: DetailPost(id: id),
+    withNavBar: false,
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
+}
+
+gotoUser(BuildContext context, String username) {
+  pushNewScreen(
+    context,
+    screen: UserProfile(username: username),
     withNavBar: false,
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:bumble_bot/data/model/detail_user_model.dart';
 import 'package:bumble_bot/data/model/profile_model.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -64,5 +65,25 @@ class ProfileRepository {
       ),
     );
     return StatusMessageModel.fromMap(response.data);
+  }
+
+  Future<DetailUserModel> getUserDataRepo(String username) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    Map formdata = {"username": username};
+    var body = jsonEncode(formdata);
+
+    var response = await dio.post(
+      "https://sisiteknis.com/bumblebot/lihatuser",
+      data: body,
+      options: Options(
+        headers: {
+          "accept": "*/*",
+          'Authorization': "Bearer $token",
+        },
+      ),
+    );
+    return DetailUserModel.fromMap(response.data);
   }
 }

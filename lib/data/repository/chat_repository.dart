@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bumble_bot/data/model/chat_model.dart';
 import 'package:bumble_bot/data/model/list_chat_model.dart';
 import 'package:bumble_bot/data/model/status_message_model.dart';

@@ -4,8 +4,12 @@ import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:flutter/material.dart';
 
 class FollowAndLike extends StatelessWidget {
+  final String followers;
+  final String following;
   const FollowAndLike({
     Key? key,
+    required this.followers,
+    required this.following,
   }) : super(key: key);
 
   @override
@@ -20,14 +24,14 @@ class FollowAndLike extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('0', style: bigFonts(cWhite)),
+              Text(followers, style: bigFonts(cWhite)),
               Text('Followers', style: h3(cWhite))
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('0', style: bigFonts(cWhite)),
+              Text(following, style: bigFonts(cWhite)),
               Text('Following', style: h3(cWhite))
             ],
           ),

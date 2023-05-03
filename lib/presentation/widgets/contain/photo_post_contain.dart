@@ -1,6 +1,7 @@
 import 'package:bumble_bot/data/repository/contain_repository.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:bumble_bot/presentation/screens/detail_post.dart';
+import 'package:bumble_bot/presentation/screens/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
@@ -110,9 +111,12 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        CircleAvatar(
-          radius: 20,
-          backgroundImage: NetworkImage("$imageUrl$image"),
+        GestureDetector(
+          onTap: () => gotoUser(context, username),
+          child: CircleAvatar(
+            radius: 20,
+            backgroundImage: NetworkImage("$imageUrl$image"),
+          ),
         ),
         GestureDetector(
           onTap: () => isdetail ? null : gotoDetail(context, id),
@@ -253,20 +257,6 @@ Widget descriptionUi(BuildContext context, String description, String hastag,
                   ],
                 )
               : Container(),
-          // const SizedBox(height: 10),
-          // Row(
-          //   children: [
-          //     const Icon(Icons.people, size: 14, color: cPremier),
-          //     SizedBox(
-          //       width: sWidthFull(context) - 45 - 14,
-          //       child: Text(
-          //         '  Jl manggis Jl, auihaohsmm, sadhom , doahs , asidm, dajkdaefefefe',
-          //         overflow: TextOverflow.ellipsis,
-          //         style: h5(cGray),
-          //       ),
-          //     )
-          //   ],
-          // )
         ],
       ),
     ),
@@ -277,6 +267,15 @@ gotoDetail(BuildContext context, String id) {
   pushNewScreen(
     context,
     screen: DetailPost(id: id),
+    withNavBar: false,
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
+}
+
+gotoUser(BuildContext context, String username) {
+  pushNewScreen(
+    context,
+    screen: UserProfile(username: username),
     withNavBar: false,
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

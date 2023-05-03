@@ -1,5 +1,5 @@
 import 'package:bumble_bot/data/api/base_url.dart';
-import 'package:bumble_bot/data/model/profile_model.dart';
+import 'package:bumble_bot/data/model/detail_user_model.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
@@ -26,9 +26,11 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoading = true;
-  late ProfileModel profileData;
+  late DetailUserModel profileData;
   getProfile(context) async {
-    await ProfileRepository().getProfileRepo().then((value) {
+    final pref = await SharedPreferences.getInstance();
+    var username = pref.getString('Username') ?? '';
+    await ProfileRepository().getUserDataRepo(username).then((value) {
       setState(() {
         profileData = value;
         isLoading = false;
@@ -100,7 +102,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SosmedCatalog(),
-                const FollowAndLike(),
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : FollowAndLike(
+                        followers: profileData.data.followers,
+                        following: profileData.data.following,
+                      ),
                 const EditAndMassage(),
                 const PostSroryGift()
               ],

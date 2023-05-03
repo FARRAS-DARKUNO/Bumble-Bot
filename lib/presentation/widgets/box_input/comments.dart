@@ -1,9 +1,6 @@
-import 'package:bumble_bot/data/repository/profile_repository.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
 import 'package:flutter/material.dart';
-
-import '../../../data/model/profile_model.dart';
 
 class CommentsInput extends StatefulWidget {
   final VoidCallback action;
