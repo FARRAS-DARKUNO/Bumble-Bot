@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bumble_bot/data/model/chat_model.dart';
 import 'package:bumble_bot/data/repository/chat_repository.dart';
-import 'package:bumble_bot/presentation/widgets/button/back_button_chat.dart';
+import 'package:bumble_bot/presentation/widgets/button/back_button_group.dart';
 import 'package:bumble_bot/presentation/widgets/contain/server_chat.dart';
+import 'package:bumble_bot/presentation/widgets/contain/server_group.dart';
 import 'package:bumble_bot/presentation/widgets/contain/user_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -11,18 +12,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../global/colors.dart';
 import '../global/size.dart';
 
-class Chat extends StatefulWidget {
+class Group extends StatefulWidget {
   final String roomId;
-  const Chat({Key? key, required this.roomId}) : super(key: key);
+  const Group({Key? key, required this.roomId}) : super(key: key);
 
   @override
-  State<Chat> createState() => _ChatState();
+  State<Group> createState() => _GroupState();
 }
 
-class _ChatState extends State<Chat> {
+class _GroupState extends State<Group> {
   String username = '';
   bool isLoading = true;
   String nameRoom = '';
+  String totalPeople = '0';
   ChatModel? data;
 
   TextEditingController textToSendConStroller = TextEditingController();
@@ -62,7 +64,7 @@ class _ChatState extends State<Chat> {
           body: SafeArea(
             child: Column(
               children: [
-                BackButtonChat(name: nameRoom),
+                BackButtonGroup(name: nameRoom, totalPersonil: totalPeople),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   color: const Color.fromARGB(255, 235, 229, 214),
@@ -78,7 +80,11 @@ class _ChatState extends State<Chat> {
                             children: data!.data.map((value) {
                             return value.username == username
                                 ? UserChat(message: value.message)
-                                : ServerChat(message: value.message);
+                                : ServerGroup(
+                                    message: value.message,
+                                    photoProfile: value.profile_picture,
+                                    username: value.username,
+                                  );
                           }).toList()),
                   ),
                 ),
@@ -138,10 +144,12 @@ class _ChatState extends State<Chat> {
   getChat() async {
     await ChatRepository().getChat(widget.roomId).then((value) {
       if (mounted) {
+        print(value);
         setState(() {
           data = value;
           isLoading = false;
           nameRoom = value.room_info.room_name;
+          totalPeople = value.room_info.member_count;
         });
       }
     });

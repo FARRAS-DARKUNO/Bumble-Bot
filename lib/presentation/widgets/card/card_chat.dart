@@ -1,5 +1,6 @@
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/screens/chat.dart';
+import 'package:bumble_bot/presentation/screens/group.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
@@ -24,7 +25,7 @@ class CardChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => gotoChat(context, id),
+      onTap: () => gotoChat(context, id, type),
       child: Card(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -68,11 +69,20 @@ class CardChat extends StatelessWidget {
   }
 }
 
-gotoChat(BuildContext context, String id) {
-  pushNewScreen(
-    context,
-    screen: Chat(roomId: id),
-    withNavBar: false, // OPTIONAL VALUE. True by default.
-    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-  );
+gotoChat(BuildContext context, String id, String type) {
+  if (type == 'personal') {
+    pushNewScreen(
+      context,
+      screen: Chat(roomId: id),
+      withNavBar: false, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  } else {
+    pushNewScreen(
+      context,
+      screen: Group(roomId: id),
+      withNavBar: false, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
 }
