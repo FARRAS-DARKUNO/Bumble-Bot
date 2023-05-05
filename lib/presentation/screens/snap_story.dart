@@ -1,6 +1,8 @@
 import 'package:bumble_bot/data/api/base_url.dart';
 import 'package:bumble_bot/data/repository/contain_repository.dart';
+import 'package:bumble_bot/presentation/screens/story_post.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 import 'package:story_view/story_view.dart';
 
 import '../../data/model/detail_story_model.dart';
@@ -21,7 +23,7 @@ class _SnapStoryState extends State<SnapStory> {
   getStory() async {
     ContainRepository().getDetailStory(widget.username).then((value) {
       if (value.data.isEmpty) {
-        Navigator.pop(context);
+        gotoPosting(context);
       } else {
         setState(() {
           story = value;
@@ -65,16 +67,13 @@ class _SnapStoryState extends State<SnapStory> {
             ),
     );
   }
-}
 
-// StoryItem.pageImage(
-//               url:
-//                   'https://thumbs.dreamstime.com/z/hand-man-reaching-to-towards-sky-make-symbol-118400493.jpg',
-//               controller: controller,
-//             ),
-            // StoryItem.pageVideo(
-            //   'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-            //   controller: controller,
-            //   duration: const Duration(seconds: 15),
-            //   caption: '',
-            // )
+  gotoPosting(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: const StoryPost(),
+      withNavBar: true, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
+}

@@ -13,6 +13,7 @@ import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 import '../../data/api/base_url.dart';
 import '../../data/repository/contain_repository.dart';
+import 'detail_post.dart';
 
 class UserProfile extends StatefulWidget {
   final String username;
@@ -103,58 +104,33 @@ class _UserProfileState extends State<UserProfile> {
                         followers: profileData.data.followers,
                         following: profileData.data.following,
                       ),
-                GridView.count(
-                  crossAxisCount: 3,
-                  padding: const EdgeInsets.all(3),
-                  crossAxisSpacing: 3,
-                  mainAxisSpacing: 3,
-                  scrollDirection: Axis.vertical,
-                  physics: const NeverScrollableScrollPhysics(), // arah scroll
-                  shrinkWrap: true, // jumlah kolom
-                  children: [
-                    // daftar widget yang ingin ditampilkan
-                    Container(
-                      color: Colors.red,
-                      child: Text('Widget 1'),
-                    ),
-                    Container(
-                      color: Colors.blue,
-                      child: Text('Widget 2'),
-                    ),
-                    Container(
-                      color: Colors.green,
-                      child: Text('Widget 3'),
-                    ),
-                    Container(
-                      color: Colors.blue,
-                      child: Text('Widget 2'),
-                    ),
-                    Container(
-                      color: Colors.green,
-                      child: Text('Widget 3'),
-                    ),
-                    Container(
-                      color: Colors.red,
-                      child: Text('Widget 1'),
-                    ),
-                    Container(
-                      color: Colors.blue,
-                      child: Text('Widget 2'),
-                    ),
-                    Container(
-                      color: Colors.green,
-                      child: Text('Widget 3'),
-                    ),
-                    Container(
-                      color: Colors.blue,
-                      child: Text('Widget 2'),
-                    ),
-                    Container(
-                      color: Colors.green,
-                      child: Text('Widget 3'),
-                    ),
-                  ],
-                ),
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : GridView.count(
+                        crossAxisCount: 3,
+                        padding: const EdgeInsets.all(3),
+                        crossAxisSpacing: 3,
+                        mainAxisSpacing: 3,
+                        scrollDirection: Axis.vertical,
+                        physics:
+                            const NeverScrollableScrollPhysics(), // arah scroll
+                        shrinkWrap: true, // jumlah kolom
+                        children: profileData.data.posts.map((value) {
+                          return GestureDetector(
+                            onTap: () => gotoDetail(context, value.id),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: cBlack,
+                                image: DecorationImage(
+                                  image:
+                                      NetworkImage('$imageUrl${value.image}'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
               ],
             ),
           ),
@@ -262,5 +238,14 @@ class _UserProfileState extends State<UserProfile> {
         );
       }
     });
+  }
+
+  gotoDetail(BuildContext context, String id) {
+    pushNewScreen(
+      context,
+      screen: DetailPost(id: id),
+      withNavBar: false,
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
   }
 }
