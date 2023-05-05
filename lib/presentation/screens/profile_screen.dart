@@ -107,6 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     : FollowAndLike(
                         followers: profileData.data.followers,
                         following: profileData.data.following,
+                        username: profileData.data.username,
                       ),
                 const EditAndMassage(),
                 const PostSroryGift()

@@ -103,6 +103,7 @@ class _UserProfileState extends State<UserProfile> {
                     : FollowAndLike(
                         followers: profileData.data.followers,
                         following: profileData.data.following,
+                        username: profileData.data.username,
                       ),
                 isLoading
                     ? const Center(child: CircularProgressIndicator())
