@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bumble_bot/data/model/chat_model.dart';
 import 'package:bumble_bot/data/repository/chat_repository.dart';
 import 'package:bumble_bot/presentation/widgets/button/back_button_group.dart';
-import 'package:bumble_bot/presentation/widgets/contain/server_chat.dart';
 import 'package:bumble_bot/presentation/widgets/contain/server_group.dart';
 import 'package:bumble_bot/presentation/widgets/contain/user_chat.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +63,11 @@ class _GroupState extends State<Group> {
           body: SafeArea(
             child: Column(
               children: [
-                BackButtonGroup(name: nameRoom, totalPersonil: totalPeople),
+                BackButtonGroup(
+                  name: nameRoom,
+                  totalPersonil: totalPeople,
+                  roomid: widget.roomId,
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   color: const Color.fromARGB(255, 235, 229, 214),
@@ -144,7 +147,6 @@ class _GroupState extends State<Group> {
   getChat() async {
     await ChatRepository().getChat(widget.roomId).then((value) {
       if (mounted) {
-        print(value);
         setState(() {
           data = value;
           isLoading = false;

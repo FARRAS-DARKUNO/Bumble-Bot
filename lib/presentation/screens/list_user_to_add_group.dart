@@ -171,7 +171,6 @@ class _ListUserToAddGroupState extends State<ListUserToAddGroup> {
       var username = pref.getString('Username') ?? '';
 
       var passing = '["$username","${listPeople.join('", "')}"]';
-      print(passing);
       await ChatRepository()
           .postMessageGroup(passing, controllerTitleGroup.value.text)
           .then((value) {

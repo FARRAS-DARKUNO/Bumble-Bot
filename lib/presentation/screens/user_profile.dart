@@ -103,6 +103,58 @@ class _UserProfileState extends State<UserProfile> {
                         followers: profileData.data.followers,
                         following: profileData.data.following,
                       ),
+                GridView.count(
+                  crossAxisCount: 3,
+                  padding: const EdgeInsets.all(3),
+                  crossAxisSpacing: 3,
+                  mainAxisSpacing: 3,
+                  scrollDirection: Axis.vertical,
+                  physics: const NeverScrollableScrollPhysics(), // arah scroll
+                  shrinkWrap: true, // jumlah kolom
+                  children: [
+                    // daftar widget yang ingin ditampilkan
+                    Container(
+                      color: Colors.red,
+                      child: Text('Widget 1'),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      child: Text('Widget 2'),
+                    ),
+                    Container(
+                      color: Colors.green,
+                      child: Text('Widget 3'),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      child: Text('Widget 2'),
+                    ),
+                    Container(
+                      color: Colors.green,
+                      child: Text('Widget 3'),
+                    ),
+                    Container(
+                      color: Colors.red,
+                      child: Text('Widget 1'),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      child: Text('Widget 2'),
+                    ),
+                    Container(
+                      color: Colors.green,
+                      child: Text('Widget 3'),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      child: Text('Widget 2'),
+                    ),
+                    Container(
+                      color: Colors.green,
+                      child: Text('Widget 3'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

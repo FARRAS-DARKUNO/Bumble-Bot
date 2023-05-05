@@ -137,13 +137,41 @@ class ChatRepository {
           },
         ),
       );
-      print(response.data);
       return CreateChatRoomModel.fromMap(response.data);
     } catch (_) {
       var error = {"status": "Error", "message": "Error", "room_id": -1};
-      print(error);
 
       return CreateChatRoomModel.fromMap(error);
+    }
+  }
+
+  Future<StatusMessageModel> postAddPeopleToGroup(
+    String roomId,
+    String username,
+  ) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+    FormData formdata = FormData.fromMap({
+      "room_id": roomId,
+      "username": username,
+    });
+
+    try {
+      var response = await dio.post(
+        "https://sisiteknis.com/bumblebot/chatundang",
+        data: formdata,
+        options: Options(
+          headers: {
+            "accept": "*/*",
+            'Authorization': "Bearer $token",
+          },
+        ),
+      );
+      return StatusMessageModel.fromMap(response.data);
+    } catch (_) {
+      var error = {"status": "Error", "message": "Error"};
+
+      return StatusMessageModel.fromMap(error);
     }
   }
 }

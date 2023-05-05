@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bumble_bot/data/model/detail_story_model.dart';
+import 'package:bumble_bot/data/model/list_stoty_model.dart';
 import 'package:bumble_bot/data/model/post_contain_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -176,6 +178,81 @@ class ContainRepository {
     } catch (_) {
       var error = {"status": "error", "message": "jangan Spam"};
       return StatusMessageModel.fromMap(error);
+    }
+  }
+
+  Future<StatusMessageModel> postStory(String caption, File image) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    FormData formdata = FormData.fromMap({
+      "caption": caption,
+      "image": await MultipartFile.fromFile(
+        image.path,
+        filename: image.path.split('/').last,
+      )
+    });
+    try {
+      var response = await dio.post(
+        "https://sisiteknis.com/bumblebot/poststory",
+        data: formdata,
+        options: Options(
+          headers: {
+            "accept": "*/*",
+            'Authorization': "Bearer $token",
+            "Content-Type": "multipart/form-data"
+          },
+        ),
+      );
+      return StatusMessageModel.fromMap(response.data);
+    } catch (_) {
+      Map<String, dynamic> error = {
+        'status': "Terjadi Kesalah",
+        'message': "Terdapat Kesalahan"
+      };
+      return StatusMessageModel.fromMap(error);
+    }
+  }
+
+  Future<ListStoryModel> getListStory() async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    try {
+      var response = await dio.get(
+        "https://sisiteknis.com/bumblebot/get_list_story_today",
+        options: Options(
+          headers: {
+            "accept": "*/*",
+            'Authorization': "Bearer $token",
+          },
+        ),
+      );
+      return ListStoryModel.fromMap(response.data);
+    } catch (_) {
+      Map<String, dynamic> error = {'status': "error", 'data': []};
+      return ListStoryModel.fromMap(error);
+    }
+  }
+
+  Future<DetailStoryModel> getDetailStory(String username) async {
+    final pref = await SharedPreferences.getInstance();
+    var token = pref.getString('Token') ?? '';
+
+    try {
+      var response = await dio.get(
+        "https://sisiteknis.com/bumblebot/get_story?username=$username",
+        options: Options(
+          headers: {
+            "accept": "*/*",
+            'Authorization': "Bearer $token",
+          },
+        ),
+      );
+      return DetailStoryModel.fromMap(response.data);
+    } catch (_) {
+      Map<String, dynamic> error = {'status': "error", 'data': []};
+      return DetailStoryModel.fromMap(error);
     }
   }
 }

@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:bumble_bot/data/repository/contain_repository.dart';
 import 'package:bumble_bot/presentation/widgets/alert/alert_dynamic.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/add_location_on_posting.dart';
-import 'package:bumble_bot/presentation/widgets/box_input/add_people_on_posting.dart';
-import 'package:bumble_bot/presentation/widgets/box_input/hashtag_dropdown.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/input_image.dart';
 import 'package:bumble_bot/presentation/widgets/box_input/text_normal_input.dart';
 import 'package:bumble_bot/presentation/widgets/button/normal_button.dart';
@@ -34,7 +32,7 @@ class _PostingState extends State<Posting> {
 
   bool isLoading = false;
 
-  getImage(File data) {
+  getImage(File? data) {
     setState(() {
       image = data;
     });

@@ -1,5 +1,6 @@
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
+import 'package:bumble_bot/presentation/widgets/alert/alert_dynamic.dart';
 import 'package:bumble_bot/presentation/widgets/button/button_on_wallet.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_wallet.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +103,7 @@ Widget waletUi(BuildContext context, String tokenWallet) {
                 ),
               ),
               GestureDetector(
-                onTap: () => onCopy(tokenWallet),
+                onTap: () => onCopy(context, tokenWallet),
                 child: const Icon(
                   Icons.copy,
                   color: cTersier,
@@ -117,6 +118,8 @@ Widget waletUi(BuildContext context, String tokenWallet) {
   );
 }
 
-onCopy(String text) async {
-  await Clipboard.setData(ClipboardData(text: text));
+onCopy(BuildContext context, String text) async {
+  await Clipboard.setData(ClipboardData(text: text)).then((_) {
+    alertDynamic(context, 'Copy', 'Copy Wallet Address');
+  });
 }

@@ -276,7 +276,7 @@ gotoUser(BuildContext context, String username) {
   pushNewScreen(
     context,
     screen: UserProfile(username: username),
-    withNavBar: false,
+    withNavBar: true,
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );
 }

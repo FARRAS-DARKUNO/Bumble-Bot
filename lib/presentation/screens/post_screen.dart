@@ -181,7 +181,7 @@ class _PostScreenState extends State<PostScreen> {
   gotoPosting(BuildContext context) {
     pushNewScreen(
       context,
-      screen: Posting(),
+      screen: const Posting(),
       withNavBar: true, // OPTIONAL VALUE. True by default.
       pageTransitionAnimation: PageTransitionAnimation.cupertino,
     );

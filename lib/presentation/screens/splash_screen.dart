@@ -53,8 +53,9 @@ getToken(context) async {
         await pref.setString('Wallet', value.data.wallet);
         await pref.setString('Email', value.data.email);
         await pref.setString('Username', value.data.username);
+        await pref.setString('Image', value.data.profile_picture);
         gotoNext(context);
-      });
+      }).catchError((_) => gotoLogin(context));
     } catch (_) {
       gotoLogin(context);
     }

@@ -18,7 +18,8 @@ class _CorouselSLiderState extends State<CorouselSLider> {
       width: sWidthFull(context),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: CarouselSlider(
-        options: CarouselOptions(height: 150, viewportFraction: 1),
+        options: CarouselOptions(
+            height: sWidthFull(context) * 8 / 16, viewportFraction: 1),
         items: imgList.map((value) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(20),
