@@ -11,3 +11,15 @@ List listReputation = [
   {"name": "Bad", 'color': cbad},
   {"name": "Unknow", 'color': cUnknow},
 ];
+
+convertReputation(String reputation) {
+  if (reputation == '0') {
+    return cUnknow;
+  } else if (reputation == '1') {
+    return cbad;
+  } else if (reputation == '2') {
+    return cMediumRisk;
+  } else if (reputation == '3') {
+    return cGood;
+  }
+}

@@ -6,8 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 
 class CardNewListing extends StatelessWidget {
+  final String nameToken;
+  final String reputation;
+  final String walet;
+  final String kyc;
+  final String createDate;
+
   const CardNewListing({
     Key? key,
+    required this.nameToken,
+    required this.createDate,
+    required this.kyc,
+    required this.reputation,
+    required this.walet,
   }) : super(key: key);
 
   @override
@@ -28,18 +39,13 @@ class CardNewListing extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              height: 50,
-              width: 50,
-              color: cBlack,
-            ),
-            Container(
               alignment: Alignment.topLeft,
               width: 110,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'BumbleCoint',
+                    nameToken,
                     style: h3(cBlack),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -51,7 +57,7 @@ class CardNewListing extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: cGood,
+                          color: convertReputation(reputation),
                         ),
                         height: 12,
                         width: 12,
@@ -73,7 +79,7 @@ class CardNewListing extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    'bbcbiabibcUWVudaqdadw3adawddviad',
+                    walet,
                     style: h5(cGray),
                     overflow: TextOverflow.ellipsis,
                   )
@@ -90,13 +96,13 @@ class CardNewListing extends StatelessWidget {
       ),
     );
   }
-}
 
-goNext(BuildContext context) {
-  pushNewScreen(
-    context,
-    screen: const DetailCoint(),
-    withNavBar: true, // OPTIONAL VALUE. True by default.
-    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-  );
+  goNext(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: DetailCoint(resultScanne: walet),
+      withNavBar: true, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
 }

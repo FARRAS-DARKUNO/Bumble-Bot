@@ -5,8 +5,12 @@ import 'package:bumble_bot/presentation/utils/list_reputation.dart';
 import 'package:flutter/material.dart';
 
 class WaletOwner extends StatelessWidget {
+  final String project;
+  final String wallet;
   const WaletOwner({
     Key? key,
+    required this.project,
+    required this.wallet,
   }) : super(key: key);
 
   @override
@@ -25,7 +29,7 @@ class WaletOwner extends StatelessWidget {
               Text('Project', style: h4(cPremier)),
             ),
             DataCell(
-              Text('BumbleCoint', style: h5(cBlack)),
+              Text(project, style: h5(cBlack)),
             ),
           ]),
           DataRow(cells: [
@@ -33,7 +37,10 @@ class WaletOwner extends StatelessWidget {
               Text('Wallet Address', style: h4(cPremier)),
             ),
             DataCell(
-              Text('xabiobneiudnbaeiuhfiuaehb', style: h5(cBlack)),
+              SizedBox(
+                width: sWidthDynamic(context, 0.5),
+                child: Text(wallet, style: h5(cBlack)),
+              ),
             ),
           ]),
           DataRow(cells: [

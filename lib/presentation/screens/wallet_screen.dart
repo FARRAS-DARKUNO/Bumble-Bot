@@ -120,6 +120,6 @@ Widget waletUi(BuildContext context, String tokenWallet) {
 
 onCopy(BuildContext context, String text) async {
   await Clipboard.setData(ClipboardData(text: text)).then((_) {
-    alertDynamic(context, 'Copy', 'Copy Wallet Address');
+    alertDynamic(context, 'Copy', 'Copy Wallet Address : \n\n$text');
   });
 }

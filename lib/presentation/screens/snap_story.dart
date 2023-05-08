@@ -53,12 +53,14 @@ class _SnapStoryState extends State<SnapStory> {
                     ? StoryItem.pageImage(
                         url: '$imageUrl${value.image}',
                         controller: controller,
+                        duration: const Duration(seconds: 15),
+                        caption: value.caption,
                       )
                     : StoryItem.pageVideo(
                         '$baseUrl${value.image}',
                         controller: controller,
                         duration: const Duration(seconds: 15),
-                        caption: '',
+                        caption: value.caption,
                       );
               }).toList(),
               onComplete: () => Navigator.pop(context),
