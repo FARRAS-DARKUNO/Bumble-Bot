@@ -50,11 +50,11 @@ class WaletOwner extends StatelessWidget {
             DataCell(
               Row(
                 children: [
-                  Text('Good ', style: h5(cBlack)),
+                  Text('Medium Risk ', style: h5(cBlack)),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
-                      color: cGood,
+                      color: cYellow,
                     ),
                     height: 12,
                     width: 12,
@@ -68,7 +68,7 @@ class WaletOwner extends StatelessWidget {
               Text('KYC', style: h4(cPremier)),
             ),
             DataCell(
-              Text('KYC Verivied', style: h5(cBlack)),
+              Text('non KYC', style: h5(cBlack)),
             ),
           ]),
         ],

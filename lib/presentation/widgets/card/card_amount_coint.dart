@@ -1,11 +1,27 @@
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/repository/wallet_repository.dart';
 import '../../global/colors.dart';
 import '../../global/size.dart';
 
-class CardAmountCoint extends StatelessWidget {
+class CardAmountCoint extends StatefulWidget {
   const CardAmountCoint({Key? key}) : super(key: key);
+
+  @override
+  State<CardAmountCoint> createState() => _CardAmountCointState();
+}
+
+class _CardAmountCointState extends State<CardAmountCoint> {
+  double bnb = 0;
+  double bumble = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getBnb();
+    getBumble();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +39,34 @@ class CardAmountCoint extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: [
-                  Text('0', style: h1(cBlack)),
+                  Text('$bnb', style: h1(cBlack)),
                   Text('BNB', style: h4(cBlack)),
                 ],
               ),
               Column(
                 children: [
-                  Text('0', style: h1(cBlack)),
+                  Text('$bumble', style: h1(cBlack)),
                   Text('BUMBLE', style: h4(cBlack)),
                 ],
               )
             ],
           ),
         ));
+  }
+
+  getBnb() async {
+    WalletRepository().getCointBalance().then((value) {
+      setState(() {
+        bnb = value.account;
+      });
+    });
+  }
+
+  getBumble() async {
+    WalletRepository().getTokenBalance().then((value) {
+      setState(() {
+        bumble = value.amount;
+      });
+    });
   }
 }
