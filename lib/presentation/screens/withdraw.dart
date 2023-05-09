@@ -24,6 +24,8 @@ class Withdraw extends StatefulWidget {
 class _WithdrawState extends State<Withdraw> {
   String walletToken = '';
   final password = TextEditingController();
+  final amount = TextEditingController();
+  final drowdown = TextEditingController();
 
   getToken() async {
     final pref = await SharedPreferences.getInstance();
@@ -64,7 +66,11 @@ class _WithdrawState extends State<Withdraw> {
                         infoAddress(context, walletToken),
                         const AddressScan(hintText: 'To Address'),
                         const SizedBox(height: 10),
-                        const AmountDropdown(hintText: 'Amount'),
+                        AmountDropdown(
+                          hintText: 'Amount',
+                          text: amount,
+                          dropdown: drowdown,
+                        ),
                         const SizedBox(height: 10),
                         PasswordInput(hintText: 'Password', text: password),
                         const SizedBox(height: 30),

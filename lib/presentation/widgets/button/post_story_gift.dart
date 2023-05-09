@@ -97,7 +97,7 @@ gotoStory(BuildContext context) {
 gotoGift(BuildContext context) {
   pushNewScreen(
     context,
-    screen: GiftToken(),
+    screen: const GiftToken(),
     withNavBar: true, // OPTIONAL VALUE. True by default.
     pageTransitionAnimation: PageTransitionAnimation.cupertino,
   );

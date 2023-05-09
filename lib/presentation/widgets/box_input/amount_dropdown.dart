@@ -1,12 +1,20 @@
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../global/colors.dart';
 import '../../global/size.dart';
 
 class AmountDropdown extends StatefulWidget {
   final String hintText;
-  const AmountDropdown({Key? key, required this.hintText}) : super(key: key);
+  final TextEditingController text;
+  final TextEditingController dropdown;
+  const AmountDropdown({
+    Key? key,
+    required this.hintText,
+    required this.text,
+    required this.dropdown,
+  }) : super(key: key);
 
   @override
   State<AmountDropdown> createState() => _AmountDropdownState();
@@ -15,6 +23,7 @@ class AmountDropdown extends StatefulWidget {
 class _AmountDropdownState extends State<AmountDropdown> {
   List<String> list = <String>['BNB', 'BUMBLE'];
   String dropdownValue = 'BNB';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,6 +39,7 @@ class _AmountDropdownState extends State<AmountDropdown> {
           SizedBox(
             width: sWidthDynamic(context, 0.58),
             child: TextField(
+              controller: widget.text,
               // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
@@ -48,9 +58,9 @@ class _AmountDropdownState extends State<AmountDropdown> {
               elevation: 16,
               style: h3(cBlack),
               onChanged: (String? value) {
-                // This is called when the user selects an item.
                 setState(() {
                   dropdownValue = value!;
+                  widget.dropdown.text = value;
                 });
               },
               items: list.map<DropdownMenuItem<String>>((String value) {

@@ -6,16 +6,36 @@ import 'package:bumble_bot/presentation/widgets/box_input/text_normal_input.dart
 import 'package:bumble_bot/presentation/widgets/button/normal_button.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_amount_coint.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
+import '../../data/repository/gift_repository.dart';
 import '../global/size.dart';
+import '../widgets/alert/alert_dynamic.dart';
 import '../widgets/button/back_button.dart';
+import '../widgets/navigation/navigation.dart';
 
-class GiftToken extends StatelessWidget {
-  GiftToken({
+class GiftToken extends StatefulWidget {
+  const GiftToken({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<GiftToken> createState() => _GiftTokenState();
+}
+
+class _GiftTokenState extends State<GiftToken> {
   final username = TextEditingController();
+  final amount = TextEditingController();
   final password = TextEditingController();
+  final drowdown = TextEditingController();
+  bool isLoading = false;
+
+  String provateKey = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getPrivateKey();
+  }
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -37,11 +57,19 @@ class GiftToken extends StatelessWidget {
                       const SizedBox(height: 10),
                       TextNormalInput(hintText: 'To Username', text: username),
                       const SizedBox(height: 10),
-                      const AmountDropdown(hintText: 'Amount'),
+                      AmountDropdown(
+                        hintText: 'Amount',
+                        text: amount,
+                        dropdown: drowdown,
+                      ),
                       const SizedBox(height: 10),
-                      PasswordInput(hintText: 'Password', text: password),
+                      // PasswordInput(hintText: 'Password', text: password),
                       const SizedBox(height: 30),
-                      const NormalButton(title: 'Submit'),
+                      GestureDetector(
+                        onTap: () => postGiftToken(),
+                        child: NormalButton(
+                            title: isLoading ? "Loading..." : 'Submit'),
+                      ),
                     ],
                   ),
                 ),
@@ -50,4 +78,64 @@ class GiftToken extends StatelessWidget {
           ),
         ),
       );
+
+  getPrivateKey() async {
+    GiftReposotory().getPrivateKey().then((value) {
+      setState(() {
+        provateKey = value.data.private_key;
+      });
+    });
+  }
+
+  postGiftToken() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      if (drowdown.value.text == '' || drowdown.value.text == 'BNB') {
+        GiftReposotory()
+            .postGiftCoint(provateKey, username.value.text, amount.value.text)
+            .then(
+          (value) {
+            if (value.message == 'success') {
+              gotoBack(context);
+              alertDynamic(context, value.message, 'Berhasil Terkirim');
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+              alertDynamic(context, 'Terjadi Kesalahan',
+                  'Periksa kembali data atau jaringan anda');
+            }
+          },
+        );
+      } else {
+        GiftReposotory()
+            .postGiftToken(provateKey, username.value.text, amount.value.text)
+            .then(
+          (value) {
+            if (value.message == 'success') {
+              gotoBack(context);
+              alertDynamic(context, value.message, 'Berhasil Terkirim');
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+              alertDynamic(context, 'Terjadi Kesalahan',
+                  'Periksa kembali data atau jaringan anda');
+            }
+          },
+        );
+      }
+    }
+  }
+
+  gotoBack(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: const Navigation(),
+      withNavBar: false, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
 }
