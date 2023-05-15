@@ -46,7 +46,7 @@ class CardNewListing extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     nameToken,
-                    style: h3(cBlack),
+                    style: h3(cTersier),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Row(
@@ -75,7 +75,7 @@ class CardNewListing extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Developer Contract',
-                    style: h3(cBlack),
+                    style: h3(cTersier),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(

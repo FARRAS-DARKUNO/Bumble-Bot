@@ -8,6 +8,7 @@ class DetailPostModel {
   final String userid;
   final String name;
   final String profile_picture;
+  final String wallet;
   final String type;
   final String title;
   final String image;
@@ -28,6 +29,7 @@ class DetailPostModel {
     required this.userid,
     required this.name,
     required this.profile_picture,
+    required this.wallet,
     required this.type,
     required this.title,
     required this.image,
@@ -50,6 +52,7 @@ class DetailPostModel {
     String? userid,
     String? name,
     String? profile_picture,
+    String? wallet,
     String? type,
     String? title,
     String? image,
@@ -71,6 +74,7 @@ class DetailPostModel {
       userid: userid ?? this.userid,
       name: name ?? this.name,
       profile_picture: profile_picture ?? this.profile_picture,
+      wallet: wallet ?? this.wallet,
       type: type ?? this.type,
       title: title ?? this.title,
       image: image ?? this.image,
@@ -96,6 +100,7 @@ class DetailPostModel {
     result.addAll({'userid': userid});
     result.addAll({'name': name});
     result.addAll({'profile_picture': profile_picture});
+    result.addAll({'wallet': wallet});
     result.addAll({'type': type});
     result.addAll({'title': title});
     result.addAll({'image': image});
@@ -121,6 +126,7 @@ class DetailPostModel {
       userid: map['userid'] ?? '',
       name: map['name'] ?? '',
       profile_picture: map['profile_picture'] ?? '',
+      wallet: map['wallet'] ?? '',
       type: map['type'] ?? '',
       title: map['title'] ?? '',
       image: map['image'] ?? '',
@@ -146,7 +152,7 @@ class DetailPostModel {
 
   @override
   String toString() {
-    return 'DetailPostModel(id: $id, username: $username, userid: $userid, name: $name, profile_picture: $profile_picture, type: $type, title: $title, image: $image, caption: $caption, hashtag: $hashtag, location: $location, created_at: $created_at, history: $history, likes: $likes, dislikes: $dislikes, typefile: $typefile, isfollow: $isfollow, islike: $islike, komentar: $komentar)';
+    return 'DetailPostModel(id: $id, username: $username, userid: $userid, name: $name, profile_picture: $profile_picture, wallet: $wallet, type: $type, title: $title, image: $image, caption: $caption, hashtag: $hashtag, location: $location, created_at: $created_at, history: $history, likes: $likes, dislikes: $dislikes, typefile: $typefile, isfollow: $isfollow, islike: $islike, komentar: $komentar)';
   }
 
   @override
@@ -159,6 +165,7 @@ class DetailPostModel {
         other.userid == userid &&
         other.name == name &&
         other.profile_picture == profile_picture &&
+        other.wallet == wallet &&
         other.type == type &&
         other.title == title &&
         other.image == image &&
@@ -182,6 +189,7 @@ class DetailPostModel {
         userid.hashCode ^
         name.hashCode ^
         profile_picture.hashCode ^
+        wallet.hashCode ^
         type.hashCode ^
         title.hashCode ^
         image.hashCode ^

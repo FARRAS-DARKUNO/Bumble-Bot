@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Text(
                   isLoading ? "..." : profileData.data.name,
-                  style: h1(cBlack),
+                  style: h1(cTersier),
                   textAlign: TextAlign.center,
                 ),
                 Text(

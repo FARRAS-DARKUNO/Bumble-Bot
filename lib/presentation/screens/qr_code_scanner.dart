@@ -78,9 +78,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
           goNext(context, scanData.code ?? '');
           result = scanData;
         });
-      } else {
-        print(scanData.format);
-      }
+      } else {}
       // setState(() {
       //   result = scanData;
       // });

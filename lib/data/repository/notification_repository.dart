@@ -2,6 +2,8 @@ import 'package:bumble_bot/data/model/list_notification_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/base_url.dart';
+
 class NotificationRepository {
   var dio = Dio();
   Future<ListNotificationModel> getNotification() async {
@@ -10,7 +12,7 @@ class NotificationRepository {
 
     try {
       var response = await dio.get(
-        "https://sisiteknis.com/bumblebot/lihat_news",
+        "${url}lihat_news",
         options: Options(
           headers: {
             "accept": "*/*",

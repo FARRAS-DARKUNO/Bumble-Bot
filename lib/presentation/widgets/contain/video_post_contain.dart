@@ -10,6 +10,7 @@ import '../../global/colors.dart';
 import '../../global/fonts.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../screens/gift_token.dart';
 import '../../screens/user_profile.dart';
 
 class VideoPostContain extends StatefulWidget {
@@ -25,6 +26,7 @@ class VideoPostContain extends StatefulWidget {
   final bool isDetail;
   final int isFollow;
   final int isLike;
+  final String wallet;
 
   const VideoPostContain({
     Key? key,
@@ -40,6 +42,7 @@ class VideoPostContain extends StatefulWidget {
     required this.isDetail,
     required this.isFollow,
     required this.isLike,
+    required this.wallet,
   }) : super(key: key);
 
   @override
@@ -61,9 +64,6 @@ class _VideoPostContainState extends State<VideoPostContain> {
 
     _controller = VideoPlayerController.network(
       "$imageUrl${widget.image}",
-      // 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
-      // "https://sisiteknis.com/bumblebot/uploads/pexels-karolina-grabowska-8136929-4096x2160-24fps.mp4",
-      // 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
       videoPlayerOptions: VideoPlayerOptions(
         mixWithOthers: false,
         allowBackgroundPlayback: false,
@@ -137,11 +137,14 @@ class _VideoPostContainState extends State<VideoPostContain> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    giftUi(context),
+                    GestureDetector(
+                      onTap: () => gotoGift(context),
+                      child: giftUi(context),
+                    ),
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () => postLike(),
+                          onTap: () => gotoGift(context),
                           child: Icon(Icons.favorite,
                               size: 30, color: isLike! ? cRed : cGray),
                         ),
@@ -247,6 +250,15 @@ class _VideoPostContainState extends State<VideoPostContain> {
         isLike = !isLike!;
       });
     }
+  }
+
+  gotoGift(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: GiftToken(giftTo: widget.wallet),
+      withNavBar: true, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
   }
 
   Widget giftUi(BuildContext context) {

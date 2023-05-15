@@ -1,3 +1,4 @@
+import 'package:bumble_bot/data/repository/wallet_repository.dart';
 import 'package:bumble_bot/presentation/widgets/card/card_profile_notification.dart';
 import 'package:bumble_bot/presentation/widgets/information/transfer_history.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,37 @@ import '../global/fonts.dart';
 import '../global/size.dart';
 import '../widgets/button/back_button.dart';
 
-class HistoryWallet extends StatelessWidget {
+class HistoryWallet extends StatefulWidget {
   const HistoryWallet({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<HistoryWallet> createState() => _HistoryWalletState();
+}
+
+class _HistoryWalletState extends State<HistoryWallet> {
+  List<dynamic> data = [];
+
+  getHistory() async {
+    WalletRepository().getHistory().then((value) {
+      var tempVar = [];
+
+      for (var element in value) {
+        tempVar += element['transfers'];
+      }
+
+      setState(() {
+        data = tempVar;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getHistory();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +54,29 @@ class HistoryWallet extends StatelessWidget {
                   children: [
                     const CardProfileNotification(),
                     Text('Transaktion History', style: h3(cBlack)),
-                    transferHistoryUp(context),
-                    transferHistoryDown(context),
-                    transferHistorySCC(context),
+                    Column(
+                        children: data.map((value) {
+                      if (value['transfer_type'] == 'OUT') {
+                        return transferHistoryUp(
+                          context,
+                          value['delta'],
+                          value['block_signed_at'],
+                          value['to_address'],
+                          value['contract_ticker_symbol'],
+                        );
+                      } else {
+                        return transferHistoryDown(
+                          context,
+                          value['delta'],
+                          value['block_signed_at'],
+                          value['from_address'],
+                          value['contract_ticker_symbol'],
+                        );
+                      }
+                    }).toList())
+                    // transferHistoryUp(context),
+                    // transferHistoryDown(context),
+                    // transferHistorySCC(context),
                   ],
                 ),
               ),

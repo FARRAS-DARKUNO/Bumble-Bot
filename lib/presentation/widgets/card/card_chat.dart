@@ -39,7 +39,7 @@ class CardChat extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(name, style: h3(cBlack)),
+                    Text(name, style: h3(cPremier)),
                     Text(
                       type,
                       style: h5(cGray),

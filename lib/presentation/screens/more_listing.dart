@@ -1,4 +1,3 @@
-import 'package:bumble_bot/data/repository/notification_repository.dart';
 import 'package:bumble_bot/data/repository/wallet_repository.dart';
 import 'package:flutter/material.dart';
 import '../../data/model/list_token_model.dart';

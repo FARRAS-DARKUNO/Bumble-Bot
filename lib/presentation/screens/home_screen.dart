@@ -39,6 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: cPremier,
     ));
+    final brightness = MediaQuery.of(context).platformBrightness;
+    var isDarkMode = brightness == Brightness.dark;
+    print(brightness);
+
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
@@ -57,7 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Become a', style: h4(cBlack)),
+                          Text('Become a',
+                              style: h4(isDarkMode ? cWhite : cBlack)),
                           Text('Contain Creator', style: h1(cBlack)),
                         ],
                       ),
@@ -90,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 isDetail: false,
                                 isFollow: value.isfollow,
                                 isLike: value.islike,
+                                wallet: value.wallet,
                               )
                             : VideoPostContain(
                                 id: value.id,
@@ -104,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 isDetail: false,
                                 isFollow: value.isfollow,
                                 isLike: value.islike,
+                                wallet: value.wallet,
                               );
                       }).toList()),
                 const SizedBox(height: 30)

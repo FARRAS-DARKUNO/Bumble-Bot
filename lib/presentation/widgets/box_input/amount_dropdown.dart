@@ -1,6 +1,5 @@
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../global/colors.dart';
 import '../../global/size.dart';
@@ -56,7 +55,7 @@ class _AmountDropdownState extends State<AmountDropdown> {
               value: dropdownValue,
               icon: const Icon(Icons.keyboard_arrow_down_rounded),
               elevation: 16,
-              style: h3(cBlack),
+              style: h3(cPremier),
               onChanged: (String? value) {
                 setState(() {
                   dropdownValue = value!;

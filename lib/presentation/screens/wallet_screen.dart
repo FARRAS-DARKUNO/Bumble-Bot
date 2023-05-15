@@ -1,4 +1,5 @@
 import 'package:bumble_bot/data/repository/gift_repository.dart';
+import 'package:bumble_bot/data/repository/wallet_repository.dart';
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/widgets/alert/alert_dynamic.dart';
@@ -11,7 +12,6 @@ import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../global/size.dart';
 import '../widgets/box_input/amount_dropdown.dart';
-import '../widgets/box_input/password.dart';
 import '../widgets/box_input/text_normal_input.dart';
 import '../widgets/button/normal_button.dart';
 
@@ -58,7 +58,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   Text('Gift Token', style: h1(cPremier)),
                   const SizedBox(height: 10),
                   const SizedBox(height: 10),
-                  TextNormalInput(hintText: 'To Username', text: username),
+                  TextNormalInput(hintText: 'To Wallet', text: username),
                   const SizedBox(height: 10),
                   AmountDropdown(
                     hintText: 'Amount',
@@ -88,7 +88,7 @@ class _WalletScreenState extends State<WalletScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Wallet', style: h1(cBlack)),
+          Text('Wallet', style: h1(cPremier)),
           Container(
             width: sWidthDynamic(context, 0.65),
             height: 35,
@@ -152,39 +152,61 @@ class _WalletScreenState extends State<WalletScreen> {
         isLoading = true;
       });
       if (drowdown.value.text == '' || drowdown.value.text == 'BNB') {
-        GiftReposotory()
-            .postGiftCoint(provateKey, username.value.text, amount.value.text)
-            .then(
-          (value) {
-            if (value.message == 'success') {
-              gotoBack(context);
-              alertDynamic(context, value.message, 'Berhasil Terkirim');
-            } else {
-              setState(() {
-                isLoading = false;
-              });
-              alertDynamic(context, 'Terjadi Kesalahan',
-                  'Periksa kembali data atau jaringan anda');
-            }
-          },
-        );
+        await WalletRepository().getCointBalance().then((value) async {
+          if (value.account > 0) {
+            await GiftReposotory()
+                .postGiftCoint(
+                    provateKey, username.value.text, amount.value.text)
+                .then(
+              (value) {
+                if (value.message == 'success') {
+                  gotoBack(context);
+                  alertDynamic(context, value.message, 'Berhasil Terkirim');
+                } else {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  alertDynamic(context, 'Terjadi Kesalahan',
+                      'Periksa kembali data atau jaringan anda');
+                }
+              },
+            );
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+            alertDynamic(context, 'Terjadi Kesalahan',
+                'periksa kembali nominal koin anda');
+          }
+        });
       } else {
-        GiftReposotory()
-            .postGiftToken(provateKey, username.value.text, amount.value.text)
-            .then(
-          (value) {
-            if (value.message == 'success') {
-              gotoBack(context);
-              alertDynamic(context, value.message, 'Berhasil Terkirim');
-            } else {
-              setState(() {
-                isLoading = false;
-              });
-              alertDynamic(context, 'Terjadi Kesalahan',
-                  'Periksa kembali data atau jaringan anda');
-            }
-          },
-        );
+        await WalletRepository().getTokenBalance().then((value) {
+          if (value.amount > 0) {
+            GiftReposotory()
+                .postGiftToken(
+                    provateKey, username.value.text, amount.value.text)
+                .then(
+              (value) {
+                if (value.message == 'success') {
+                  gotoBack(context);
+                  alertDynamic(context, value.message, 'Berhasil Terkirim');
+                } else {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  alertDynamic(context, 'Terjadi Kesalahan',
+                      'Periksa kembali data atau jaringan anda');
+                }
+              },
+            );
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+            alertDynamic(context, 'Terjadi Kesalahan',
+                'periksa kembali nominal token anda');
+          }
+        });
       }
     }
   }

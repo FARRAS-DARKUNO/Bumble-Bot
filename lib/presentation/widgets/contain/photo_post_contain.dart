@@ -8,6 +8,7 @@ import 'package:persistent_bottom_nav_bar_custom/persistent-tab-view.dart';
 import '../../../data/api/base_url.dart';
 import '../../global/colors.dart';
 import '../../global/fonts.dart';
+import '../../screens/gift_token.dart';
 
 class PhotoPostContain extends StatefulWidget {
   final String id;
@@ -22,6 +23,7 @@ class PhotoPostContain extends StatefulWidget {
   final bool isDetail;
   final int isFollow;
   final int isLike;
+  final String wallet;
 
   const PhotoPostContain({
     Key? key,
@@ -37,6 +39,7 @@ class PhotoPostContain extends StatefulWidget {
     required this.isDetail,
     required this.isFollow,
     required this.isLike,
+    required this.wallet,
   }) : super(key: key);
 
   @override
@@ -79,7 +82,10 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              giftUi(context),
+              GestureDetector(
+                onTap: () => gotoGift(context),
+                child: giftUi(context),
+              ),
               Row(
                 children: [
                   GestureDetector(
@@ -125,7 +131,7 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(name, style: h4(cBlack)),
+                Text(name, style: h4(cPremier)),
                 Text(username, style: h5(cGray))
               ],
             ),
@@ -188,6 +194,15 @@ class _PhotoPostContainState extends State<PhotoPostContain> {
         isLike = !isLike!;
       });
     }
+  }
+
+  gotoGift(BuildContext context) {
+    pushNewScreen(
+      context,
+      screen: GiftToken(giftTo: widget.wallet),
+      withNavBar: true, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
   }
 }
 

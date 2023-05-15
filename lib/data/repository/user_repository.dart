@@ -3,6 +3,8 @@ import 'package:bumble_bot/data/model/list_user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/base_url.dart';
+
 class UserRepositoty {
   var dio = Dio();
 
@@ -14,7 +16,7 @@ class UserRepositoty {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/cariuser",
+        "${url}cariuser",
         data: formdata,
         options: Options(
           headers: {
@@ -39,7 +41,7 @@ class UserRepositoty {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/follower",
+        "${url}follower",
         data: formdata,
         options: Options(
           headers: {
@@ -64,7 +66,7 @@ class UserRepositoty {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/following",
+        "${url}following",
         data: formdata,
         options: Options(
           headers: {

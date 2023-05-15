@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +48,12 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             title: 'Bumble Bot',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+                primarySwatch: Colors.blue,
+                brightness: Brightness.light,
+                primaryColorLight: cBlack),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primaryColorDark: cWhite,
             ),
             home: const SplashScreen(),
           ),

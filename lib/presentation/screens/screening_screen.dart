@@ -74,7 +74,7 @@ class _ScreeningScreenState extends State<ScreeningScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('New Listings', style: h3(cBlack)),
+                          Text('New Listings', style: h3(cPremier)),
                           GestureDetector(
                               onTap: () => gotoMore(context),
                               child: Text('More', style: h3(cPremier))),

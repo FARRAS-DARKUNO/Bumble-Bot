@@ -39,7 +39,7 @@ class BackButtonGroup extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: h3(cBlack)),
+                Text(name, style: h3(cPremier)),
                 const SizedBox(height: 5),
                 Text("Total Member : $totalPersonil", style: h5(cGray)),
               ],

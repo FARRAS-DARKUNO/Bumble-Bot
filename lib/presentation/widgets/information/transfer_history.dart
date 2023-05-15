@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import '../../global/colors.dart';
 import '../../global/size.dart';
 
-Widget transferHistoryUp(BuildContext context) {
+Widget transferHistoryUp(
+  BuildContext context,
+  String total,
+  String date,
+  String toAdrress,
+  String ticket,
+) {
   return Container(
     decoration: const BoxDecoration(
       border: Border(
@@ -34,9 +40,15 @@ Widget transferHistoryUp(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Transfer', style: h3(cBlack)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Transfer', style: h3(cBlack)),
+                      Text(date, style: h5(cGray)),
+                    ],
+                  ),
                   Text(
-                    'To:mxomaiodnnocaefcneaoncoeancioaeniocniaenoicnaeiocnioaenioe',
+                    'To:$toAdrress',
                     style: h3(cGray),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -47,20 +59,28 @@ Widget transferHistoryUp(BuildContext context) {
           ],
         ),
         const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text('29-01-2001', style: h5(cGray)),
-            Text('0,8622 BNB', style: h2(cGood))
-          ],
+        Container(
+          alignment: Alignment.topLeft,
+          width: sWidthDynamic(context, 0.98) - 45,
+          child: Text(
+            '$ticket-$total',
+            style: h2(cRed),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
         )
       ],
     ),
   );
 }
 
-Widget transferHistoryDown(BuildContext context) {
+Widget transferHistoryDown(
+  BuildContext context,
+  String total,
+  String date,
+  String fromAddres,
+  String ticket,
+) {
   return Container(
     decoration: const BoxDecoration(
       border: Border(
@@ -90,9 +110,15 @@ Widget transferHistoryDown(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Transfer', style: h3(cBlack)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Transfer', style: h3(cBlack)),
+                      Text(date, style: h5(cGray)),
+                    ],
+                  ),
                   Text(
-                    'To:mxomaiodnnocaefcneaoncoeancioaeniocniaenoicnaeiocnioaenioe',
+                    'from:$fromAddres',
                     style: h3(cGray),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -103,13 +129,15 @@ Widget transferHistoryDown(BuildContext context) {
           ],
         ),
         const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text('29-01-2001', style: h5(cGray)),
-            Text('-0,8622 BNB', style: h2(cRed))
-          ],
+        Container(
+          alignment: Alignment.topLeft,
+          width: sWidthDynamic(context, 0.98) - 45,
+          child: Text(
+            '$ticket:$total',
+            style: h2(cGood),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
         )
       ],
     ),

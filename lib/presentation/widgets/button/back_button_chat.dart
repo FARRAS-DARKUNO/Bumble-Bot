@@ -34,7 +34,7 @@ class BackButtonChat extends StatelessWidget {
             alignment: Alignment.centerLeft,
             height: sHeightBackButton(context),
             width: sWidthDynamic(context, 0.9) - 40 - 30,
-            child: Text(name, style: h3(cBlack)),
+            child: Text(name, style: h3(cPremier)),
           ),
         ],
       ),

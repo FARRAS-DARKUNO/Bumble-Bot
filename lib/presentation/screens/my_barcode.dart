@@ -55,11 +55,16 @@ class _MyBarcodeState extends State<MyBarcode> {
                     const CardAmountCoint(),
                     infoAddress(context, walletToken),
                     buttonUI(context),
-                    QrImage(
-                      data: walletToken,
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    ),
+                    Container(
+                      height: 220,
+                      width: 220,
+                      color: cWhite,
+                      child: QrImage(
+                        data: walletToken,
+                        version: QrVersions.auto,
+                        size: 200.0,
+                      ),
+                    )
                   ],
                 ),
               ),

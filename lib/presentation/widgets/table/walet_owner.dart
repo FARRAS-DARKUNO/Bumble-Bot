@@ -1,7 +1,6 @@
 import 'package:bumble_bot/presentation/global/colors.dart';
 import 'package:bumble_bot/presentation/global/fonts.dart';
 import 'package:bumble_bot/presentation/global/size.dart';
-import 'package:bumble_bot/presentation/utils/list_reputation.dart';
 import 'package:flutter/material.dart';
 
 class WaletOwner extends StatelessWidget {

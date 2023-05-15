@@ -5,6 +5,8 @@ import 'package:bumble_bot/data/model/pk_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/base_url.dart';
+
 class GiftReposotory {
   var dio = Dio();
 
@@ -18,7 +20,7 @@ class GiftReposotory {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/getpk",
+        "${url}getpk",
         data: body,
         options: Options(
           headers: {

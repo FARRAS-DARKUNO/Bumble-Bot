@@ -2,6 +2,8 @@ import 'package:bumble_bot/data/model/status_message_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/base_url.dart';
+
 class FCMRepository {
   var dio = Dio();
   Future<StatusMessageModel> updateFCMRepo(String tokenFCM) async {
@@ -11,7 +13,7 @@ class FCMRepository {
     FormData formdata = FormData.fromMap({"fcmToken": tokenFCM});
 
     var response = await dio.post(
-      'https://sisiteknis.com/bumblebot/updatefcm',
+      '${url}updatefcm',
       data: formdata,
       options: Options(
         headers: {

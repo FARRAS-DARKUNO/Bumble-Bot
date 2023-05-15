@@ -1,3 +1,4 @@
+import 'package:bumble_bot/data/api/base_url.dart';
 import 'package:bumble_bot/data/model/chat_model.dart';
 import 'package:bumble_bot/data/model/create_chat_room_model.dart';
 import 'package:bumble_bot/data/model/list_chat_model.dart';
@@ -14,7 +15,7 @@ class ChatRepository {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/chatlist",
+        "${url}chatlist",
         options: Options(
           headers: {
             "accept": "*/*",
@@ -35,7 +36,7 @@ class ChatRepository {
     FormData formdata = FormData.fromMap({"room_id": id});
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/chatambil",
+        "${url}chatambil",
         data: formdata,
         options: Options(
           headers: {
@@ -68,7 +69,7 @@ class ChatRepository {
     });
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/chatkirim",
+        "${url}chatkirim",
         data: formdata,
         options: Options(
           headers: {
@@ -97,7 +98,7 @@ class ChatRepository {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/chatroom",
+        "${url}chatroom",
         data: formdata,
         options: Options(
           headers: {
@@ -128,7 +129,7 @@ class ChatRepository {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/chatroom",
+        "${url}chatroom",
         data: formdata,
         options: Options(
           headers: {
@@ -158,7 +159,7 @@ class ChatRepository {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/chatundang",
+        "${url}chatundang",
         data: formdata,
         options: Options(
           headers: {

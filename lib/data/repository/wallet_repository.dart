@@ -162,4 +162,21 @@ class WalletRepository {
       return TokenBalanceModel.fromMap(error);
     }
   }
+
+  Future<List> getHistory() async {
+    final pref = await SharedPreferences.getInstance();
+    var wallet = pref.getString('Wallet') ?? '';
+
+    try {
+      var response = await dio.get(
+        "https://api.covalenthq.com/v1/56/address/$wallet/transfers_v2/?key=ckey_71a1d95419b749ba9f1028ce8a4&contract-address=0xf830704Ce93e8dcb07e2153Bb2f171Cf3aF0c3DB",
+      );
+
+      return response.data['data']['items'];
+    } catch (_) {
+      List error = [];
+
+      return error;
+    }
+  }
 }

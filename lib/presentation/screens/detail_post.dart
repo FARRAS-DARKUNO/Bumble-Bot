@@ -81,6 +81,7 @@ class _DetailPostState extends State<DetailPost> {
                                     isDetail: true,
                                     isFollow: data.isfollow,
                                     isLike: data.islike,
+                                    wallet: data.wallet,
                                   )
                                 : VideoPostContain(
                                     id: data.id,
@@ -95,6 +96,7 @@ class _DetailPostState extends State<DetailPost> {
                                     isDetail: true,
                                     isFollow: data.isfollow,
                                     isLike: data.islike,
+                                    wallet: data.wallet,
                                   ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 10),

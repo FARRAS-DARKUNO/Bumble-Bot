@@ -14,7 +14,7 @@ Widget infoAddress(BuildContext context, String text) {
     ),
     child: Text(
       text,
-      style: h3(cBlack),
+      style: h3(cPremier),
       overflow: TextOverflow.ellipsis,
       textAlign: TextAlign.center,
       maxLines: 1,

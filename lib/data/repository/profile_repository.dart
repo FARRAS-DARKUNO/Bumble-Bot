@@ -54,7 +54,7 @@ class ProfileRepository {
     });
 
     var response = await dio.post(
-      "https://sisiteknis.com/bumblebot/updateprofil",
+      "${url}updateprofil",
       data: formdata,
       options: Options(
         headers: {
@@ -75,7 +75,7 @@ class ProfileRepository {
     var body = jsonEncode(formdata);
 
     var response = await dio.post(
-      "https://sisiteknis.com/bumblebot/lihatuser",
+      "${url}lihatuser",
       data: body,
       options: Options(
         headers: {

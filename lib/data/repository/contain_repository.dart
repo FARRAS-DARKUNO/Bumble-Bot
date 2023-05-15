@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bumble_bot/data/api/base_url.dart';
 import 'package:bumble_bot/data/model/detail_story_model.dart';
 import 'package:bumble_bot/data/model/list_stoty_model.dart';
 import 'package:bumble_bot/data/model/post_contain_model.dart';
@@ -34,7 +35,7 @@ class ContainRepository {
     });
 
     var response = await dio.post(
-      "https://sisiteknis.com/bumblebot/postartikel",
+      "${url}postartikel",
       data: formdata,
       options: Options(
         headers: {
@@ -61,7 +62,7 @@ class ContainRepository {
     var token = pref.getString('Token') ?? '';
 
     var response = await dio.post(
-      "https://sisiteknis.com/bumblebot/get_posts?page=$page",
+      "${url}get_posts?page=$page",
       options: Options(
         headers: {
           "accept": "*/*",
@@ -84,7 +85,7 @@ class ContainRepository {
     var token = pref.getString('Token') ?? '';
 
     var response = await dio.post(
-      "https://sisiteknis.com/bumblebot/detail_post?id=$id",
+      "${url}detail_post?id=$id",
       options: Options(
         headers: {
           "accept": "*/*",
@@ -109,7 +110,7 @@ class ContainRepository {
     });
 
     var response = await dio.post(
-      "https://sisiteknis.com/bumblebot/followunfollow",
+      "${url}followunfollow",
       data: formdata,
       options: Options(
         headers: {
@@ -136,7 +137,7 @@ class ContainRepository {
     });
 
     var response = await dio.post(
-      "https://sisiteknis.com/bumblebot/likedislike",
+      "${url}likedislike",
       data: formdata,
       options: Options(
         headers: {
@@ -164,7 +165,7 @@ class ContainRepository {
 
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/komentar",
+        "${url}komentar",
         data: formdata,
         options: Options(
           headers: {
@@ -194,7 +195,7 @@ class ContainRepository {
     });
     try {
       var response = await dio.post(
-        "https://sisiteknis.com/bumblebot/poststory",
+        "${url}poststory",
         data: formdata,
         options: Options(
           headers: {
@@ -220,7 +221,7 @@ class ContainRepository {
 
     try {
       var response = await dio.get(
-        "https://sisiteknis.com/bumblebot/get_list_story_today",
+        "${url}get_list_story_today",
         options: Options(
           headers: {
             "accept": "*/*",
@@ -241,7 +242,7 @@ class ContainRepository {
 
     try {
       var response = await dio.get(
-        "https://sisiteknis.com/bumblebot/get_story?username=$username",
+        "${url}get_story?username=$username",
         options: Options(
           headers: {
             "accept": "*/*",

@@ -39,14 +39,14 @@ class _CardAmountCointState extends State<CardAmountCoint> {
             children: <Widget>[
               Column(
                 children: [
-                  Text('$bnb', style: h1(cBlack)),
-                  Text('BNB', style: h4(cBlack)),
+                  Text('$bnb', style: h1(cPremier)),
+                  Text('BNB', style: h4(cPremier)),
                 ],
               ),
               Column(
                 children: [
-                  Text('$bumble', style: h1(cBlack)),
-                  Text('BUMBLE', style: h4(cBlack)),
+                  Text('$bumble', style: h1(cPremier)),
+                  Text('BUMBLE', style: h4(cPremier)),
                 ],
               )
             ],
